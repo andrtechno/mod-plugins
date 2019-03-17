@@ -1,0 +1,31 @@
+{
+  "name": "panix/mod-plugins",
+  "description": "Module plugins",
+  "keywords": [
+    "pixelion-cms",
+    "module",
+    "plugins"
+  ],
+  "homepage": "https://github.com/andrtechno/mod-plugins",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "PIXELION CMS",
+      "email": "dev@pixelion.com.ua",
+      "homepage": "https://pixelion.com.ua"
+    },
+    {
+      "name": "LoveOrigami",
+      "homepage": "https://github.com/loveorigami/"
+    }
+  ],
+  "require": {
+    "loveorigami/yii2-jsoneditor": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "panix\\mod\\plugins\\": "src/"
+    }
+  }
+}
