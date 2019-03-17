@@ -126,6 +126,6 @@ Also do the same thing with
 
 #### Автор & License
 * Автор [LoveOrigami](https://github.com/loveorigami)
-* [License](https://github.com/loveorigami/yii2-plugins-system/blob/master/LICENSE.md)
+* [License](LICENSE.md)
 
 > Модуль был взят у автор и под корректирован под Pixelion CMS

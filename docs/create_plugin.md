@@ -11,7 +11,7 @@ To create your plugin you need to run the following required steps
 
 ```php
 
-use lo\plugins\BasePlugin;
+use panix\mod\plugins\BasePlugin;
 
 namespace common\plugins\test;
 

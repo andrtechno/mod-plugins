@@ -5,7 +5,7 @@ After [creating](create_plugin.md) your `TestPlugin` first, you must make sure t
 ```php
 'modules' => [
     'plugins' => [
-        'class' => 'lo\plugins\Module',
+        'class' => 'panix\mod\plugins\Module',
         'pluginsDir'=>[
             '@lo/plugins/plugins', // default dir with core plugins
             '@common/plugins', // dir with our plugins
