@@ -5,7 +5,7 @@ namespace panix\mod\plugins\controllers;
 use panix\mod\plugins\models\search\ShortcodeSearch;
 use Yii;
 use panix\mod\plugins\models\Shortcode;
-use yii\web\Controller;
+use panix\engine\controllers\AdminController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
  * @package panix\mod\plugins\controllers
  * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
-class ShortcodeController extends Controller
+class ShortcodeController extends AdminController
 {
     public function behaviors()
     {
