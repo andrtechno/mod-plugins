@@ -1,18 +1,19 @@
 <?php
 
-namespace panix\mod\plugins\controllers;
+namespace panix\mod\plugins\controllers\admin;
 
-use panix\mod\plugins\models\search\CategorySearch;
+use panix\mod\plugins\models\Plugin;
 use Yii;
-use panix\mod\plugins\models\Category;
-use yii\web\Controller;
+use panix\mod\plugins\models\Event;
+use panix\mod\plugins\models\search\EventSearch;
+use panix\engine\controllers\AdminController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CategoryController implements the CRUD actions for Category model.
+ * EventController implements the CRUD actions for Event model.
  */
-class CategoryController extends Controller
+class EventController extends AdminController
 {
     public function behaviors()
     {
@@ -27,12 +28,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * Lists all Category models.
+     * Lists all Event models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new EventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +43,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a single Category model.
+     * Displays a single Event model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +55,14 @@ class CategoryController extends Controller
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new Event model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Category();
+        $model = new Event();
+        $model->plugin_id = Plugin::EVENTS_CORE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -72,7 +74,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Updates an existing Category model.
+     * Updates an existing Event model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +93,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Deletes an existing Category model.
+     * Deletes an existing Event model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +106,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return Event the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Event::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

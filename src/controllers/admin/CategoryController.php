@@ -1,20 +1,18 @@
 <?php
 
-namespace panix\mod\plugins\controllers;
+namespace panix\mod\plugins\controllers\admin;
 
-use panix\mod\plugins\models\search\ShortcodeSearch;
+use panix\mod\plugins\models\search\CategorySearch;
 use Yii;
-use panix\mod\plugins\models\Shortcode;
-use yii\web\Controller;
+use panix\mod\plugins\models\Category;
+use panix\engine\controllers\AdminController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * Class ShortcodeController
- * @package panix\mod\plugins\controllers
- * @author Lukyanov Andrey <loveorigami@mail.ru>
+ * CategoryController implements the CRUD actions for Category model.
  */
-class ShortcodeController extends Controller
+class CategoryController extends AdminController
 {
     public function behaviors()
     {
@@ -29,12 +27,12 @@ class ShortcodeController extends Controller
     }
 
     /**
-     * Lists all models.
+     * Lists all Category models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ShortcodeSearch();
+        $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -44,7 +42,7 @@ class ShortcodeController extends Controller
     }
 
     /**
-     * Displays a single Shortcode model.
+     * Displays a single Category model.
      * @param integer $id
      * @return mixed
      */
@@ -56,13 +54,13 @@ class ShortcodeController extends Controller
     }
 
     /**
-     * Creates a new Shortcode model.
+     * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-/*    public function actionCreate()
+    public function actionCreate()
     {
-        $model = new Shortcode();
+        $model = new Category();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -71,10 +69,10 @@ class ShortcodeController extends Controller
                 'model' => $model,
             ]);
         }
-    }*/
+    }
 
     /**
-     * Updates an existing Shortcode model.
+     * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -93,7 +91,7 @@ class ShortcodeController extends Controller
     }
 
     /**
-     * Deletes an existing Shortcode model.
+     * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -106,15 +104,15 @@ class ShortcodeController extends Controller
     }
 
     /**
-     * Finds the Shortcode model based on its primary key value.
+     * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Shortcode the loaded model
+     * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Shortcode::findOne($id)) !== null) {
+        if (($model = Category::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
