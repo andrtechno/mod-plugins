@@ -2,18 +2,19 @@
 
 namespace panix\mod\plugins\controllers;
 
-use panix\mod\plugins\models\Plugin;
+use panix\mod\plugins\models\search\ShortcodeSearch;
 use Yii;
-use panix\mod\plugins\models\Event;
-use panix\mod\plugins\models\search\EventSearch;
-use panix\engine\controllers\WebController;
+use panix\mod\plugins\models\Shortcode;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EventController implements the CRUD actions for Event model.
+ * Class ShortcodeController
+ * @package panix\mod\plugins\controllers
+ * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
-class EventController extends WebController
+class ShortcodeController extends Controller
 {
     public function behaviors()
     {
@@ -28,12 +29,12 @@ class EventController extends WebController
     }
 
     /**
-     * Lists all Event models.
+     * Lists all models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EventSearch();
+        $searchModel = new ShortcodeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,7 +44,7 @@ class EventController extends WebController
     }
 
     /**
-     * Displays a single Event model.
+     * Displays a single Shortcode model.
      * @param integer $id
      * @return mixed
      */
@@ -55,14 +56,13 @@ class EventController extends WebController
     }
 
     /**
-     * Creates a new Event model.
+     * Creates a new Shortcode model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+/*    public function actionCreate()
     {
-        $model = new Event();
-        $model->plugin_id = Plugin::EVENTS_CORE;
+        $model = new Shortcode();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -71,10 +71,10 @@ class EventController extends WebController
                 'model' => $model,
             ]);
         }
-    }
+    }*/
 
     /**
-     * Updates an existing Event model.
+     * Updates an existing Shortcode model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -93,7 +93,7 @@ class EventController extends WebController
     }
 
     /**
-     * Deletes an existing Event model.
+     * Deletes an existing Shortcode model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -106,15 +106,15 @@ class EventController extends WebController
     }
 
     /**
-     * Finds the Event model based on its primary key value.
+     * Finds the Shortcode model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Event the loaded model
+     * @return Shortcode the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Event::findOne($id)) !== null) {
+        if (($model = Shortcode::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

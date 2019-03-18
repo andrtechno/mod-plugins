@@ -4,26 +4,27 @@ namespace panix\mod\plugins;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use panix\engine\WebModule;
 
-class Module extends \yii\base\Module
+class Module extends WebModule
 {
-    public $controllerNamespace = 'panix\mod\plugins\controllers';
-    public $defaultRoute = 'plugin';
+   // public $controllerNamespace = 'panix\mod\plugins\controllers';
+   // public $defaultRoute = 'plugin';
 
     // Directory
     public $pluginsDir;
 
-    public function init()
+    public function init2()
     {
         parent::init();
 
-        if (!isset(Yii::$app->i18n->translations['plugin'])) {
+        /*if (!isset(Yii::$app->i18n->translations['plugin'])) {
             Yii::$app->i18n->translations['plugin'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en',
                 'basePath' => '@lo/plugins/messages'
             ];
-        }
+        }*/
 
         //user did not define the Navbar?
         if (!$this->pluginsDir) {

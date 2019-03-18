@@ -1,13 +1,13 @@
 <?php
 
-namespace panix\mod\plugins\controllers;
+namespace panix\mod\plugins\controllers\admin;
 
 use panix\mod\plugins\Module;
 use panix\mod\plugins\services\PluginService;
 use panix\mod\plugins\models\Plugin;
 use panix\mod\plugins\models\search\PluginSearch;
 
-use panix\engine\controllers\WebController;
+use panix\engine\controllers\AdminController;
 use Yii;
 use yii\base\Exception;
 use yii\web\NotFoundHttpException;
@@ -19,7 +19,7 @@ use yii\data\ArrayDataProvider;
  * @package panix\mod\plugins\controllers
  * @property \panix\mod\plugins\Module $module
  */
-class PluginController extends WebController
+class PluginController extends AdminController
 {
     private $pluginService;
 
