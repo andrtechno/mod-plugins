@@ -5,8 +5,8 @@
  * @var $model panix\mod\plugins\models\Plugin
  */
 
-$this->title = Yii::t('plugin', 'Info');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('plugin', 'Items'), 'url' => ['info']];
+$this->title = Yii::t('plugins/default', 'Info');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'Items'), 'url' => ['info']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

@@ -42,8 +42,8 @@ class Category extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('plugin', 'ID'),
-            'name' => Yii::t('plugin', 'Name'),
+            'id' => Yii::t('plugins/default', 'ID'),
+            'name' => Yii::t('plugins/default', 'Name'),
         ];
     }
 

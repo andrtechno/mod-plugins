@@ -56,15 +56,15 @@ class Plugin extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('plugin', 'ID'),
-            'name' => Yii::t('plugin', 'Name'),
-            'url' => Yii::t('plugin', 'Url'),
-            'version' => Yii::t('plugin', 'Version'),
-            'text' => Yii::t('plugin', 'Text'),
-            'author' => Yii::t('plugin', 'Author'),
-            'author_url' => Yii::t('plugin', 'Author Url'),
-            'status' => Yii::t('plugin', 'Status'),
-            'hash' => Yii::t('plugin', 'Hash'),
+            'id' => Yii::t('plugins/default', 'ID'),
+            'name' => Yii::t('plugins/default', 'Name'),
+            'url' => Yii::t('plugins/default', 'Url'),
+            'version' => Yii::t('plugins/default', 'Version'),
+            'text' => Yii::t('plugins/default', 'Text'),
+            'author' => Yii::t('plugins/default', 'Author'),
+            'author_url' => Yii::t('plugins/default', 'Author Url'),
+            'status' => Yii::t('plugins/default', 'Status'),
+            'hash' => Yii::t('plugins/default', 'Hash'),
         ];
     }
 

@@ -35,7 +35,7 @@ class ClassNameValidator extends Validator
     {
         if (class_exists($value) === false) {
             return [
-                Yii::t('plugin', 'Unable to find specified class'),
+                Yii::t('plugins/default', 'Unable to find specified class'),
                 []
             ];
         } else {

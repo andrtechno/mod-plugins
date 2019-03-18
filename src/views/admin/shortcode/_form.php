@@ -42,8 +42,8 @@ $disabled = true;
                 </div>
                 <div class="col-md-6">
                         <?= $form->field($model, 'status')->dropDownList([
-                            $model::STATUS_INACTIVE => Yii::t('plugin', 'Disabled'),
-                            $model::STATUS_ACTIVE => Yii::t('plugin', 'Enabled')
+                            $model::STATUS_INACTIVE => Yii::t('plugins/default', 'Disabled'),
+                            $model::STATUS_ACTIVE => Yii::t('plugins/default', 'Enabled')
                         ]) ?>
                 </div>
             </div>
@@ -56,7 +56,7 @@ $disabled = true;
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('plugin', 'Create') : Yii::t('plugin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('plugins/default', 'Create') : Yii::t('plugins/default', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

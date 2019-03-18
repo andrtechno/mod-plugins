@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\plugins\controllers;
+namespace panix\mod\plugins\controllers\admin;
 
 use panix\mod\plugins\models\search\CategorySearch;
 use Yii;

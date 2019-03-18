@@ -10,12 +10,12 @@ use yii\grid\GridView;
  * @var $dataProvider yii\data\ActiveDataProvider
  */
 
-$this->title = Yii::t('plugin', 'Categories');
+$this->title = Yii::t('plugins/default', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
-    <?= Html::a(Yii::t('plugin', 'Create {modelClass}', [
-        'modelClass' => Yii::t('plugin', 'Category')
+    <?= Html::a(Yii::t('plugins/default', 'Create {modelClass}', [
+        'modelClass' => Yii::t('plugins/default', 'Category')
     ]), ['create'], ['class' => 'btn btn-success pull-right']) ?>
     <?= $this->render('/_menu') ?>
 
@@ -33,15 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($url) {
                         return Html::a('edit', $url, [
                             'class' => 'btn btn-xs btn-primary',
-                            'title' => Yii::t('plugin', 'Update'),
+                            'title' => Yii::t('plugins/default', 'Update'),
                         ]);
                     },
                     'delete' => function ($url) {
                         return Html::a('delete', $url, [
                             'class' => 'btn btn-xs btn-danger',
                             'data-method' => 'post',
-                            'data-confirm' => Yii::t('plugin', 'Are you sure to delete this item?'),
-                            'title' => Yii::t('plugin', 'Delete'),
+                            'data-confirm' => Yii::t('plugins/default', 'Are you sure to delete this item?'),
+                            'title' => Yii::t('plugins/default', 'Delete'),
                         ]);
                     },
                 ]

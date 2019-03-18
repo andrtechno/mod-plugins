@@ -5,12 +5,12 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var $this yii\web\View
- * @var $model panix\mod\plugins\models\search\ShortcodeSearch
+ * @var $model panix\mod\plugins\models\search\CategorySearch
  * @var $form yii\widgets\ActiveForm
  */
 ?>
 
-<div class="shortcode-search">
+<div class="category-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -18,11 +18,11 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'id') ?>
-    <?= $form->field($model, 'tag') ?>
+    <?= $form->field($model, 'name') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('plugin', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('plugin', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('plugins/default', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('plugins/default', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

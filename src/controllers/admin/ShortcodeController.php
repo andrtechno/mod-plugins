@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\plugins\controllers;
+namespace panix\mod\plugins\admin\controllers;
 
 use panix\mod\plugins\models\search\ShortcodeSearch;
 use Yii;

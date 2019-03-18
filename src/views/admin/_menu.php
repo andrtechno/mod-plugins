@@ -13,27 +13,27 @@ echo Nav::widget([
     ],
     'items' => [
         [
-            'label' => Yii::t('plugin', 'Items'),
+            'label' => Yii::t('plugins/default', 'Items'),
             'url' => ['/plugins/plugin/index'],
         ],
         [
-            'label' => Yii::t('plugin', 'Events'),
+            'label' => Yii::t('plugins/default', 'Events'),
             'url' => ['/plugins/event/index'],
         ],
         [
-            'label' => Yii::t('plugin', 'Shortcodes'),
+            'label' => Yii::t('plugins/default', 'Shortcodes'),
             'url' => ['/plugins/shortcode/index'],
         ],
         [
-            'label' => Yii::t('plugin', 'Categories'),
+            'label' => Yii::t('plugins/default', 'Categories'),
             'url' => ['/plugins/category/index'],
         ],
         [
-            'label' => Yii::t('plugin', 'Info'),
+            'label' => Yii::t('plugins/default', 'Info'),
             'url' => ['/plugins/plugin/info'],
         ],
         [
-            'label' => Yii::t('plugin', 'Install'),
+            'label' => Yii::t('plugins/default', 'Install'),
             'url' => ['/plugins/plugin/install'],
         ],
     ]

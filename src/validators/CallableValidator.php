@@ -40,7 +40,7 @@ class CallableValidator extends Validator
     {
         parent::init();
         if ($this->message === null) {
-            $this->message = Yii::t('plugin', '"{attribute}" must be a callable as [{callableValue}::{value}]');
+            $this->message = Yii::t('plugins/default', '"{attribute}" must be a callable as [{callableValue}::{value}]');
         }
         if ($this->callableAttribute === null) {
             throw new InvalidConfigException('CallableValidator::callableAttribute must be set');

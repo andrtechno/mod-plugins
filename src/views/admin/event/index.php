@@ -13,14 +13,14 @@ use yii\grid\GridView;
  * @var $dataProvider yii\data\ActiveDataProvider
  */
 
-$this->title = Yii::t('plugin', 'Events');
+$this->title = Yii::t('plugins/default', 'Events');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index">
-    <?= Html::a(Yii::t('plugin', 'Create {modelClass}', [
-        'modelClass' => Yii::t('plugin', 'Event')
+    <?= Html::a(Yii::t('plugins/default', 'Create {modelClass}', [
+        'modelClass' => Yii::t('plugins/default', 'Event')
     ]), ['create'], ['class' => 'btn btn-success pull-right']) ?>
-    <?= $this->render('/_menu') ?>
+    <?= $this->render('@plugins/views/admin/_menu') ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'app_id',
-                'label' => Yii::t('plugin', 'App'),
+                'label' => Yii::t('plugins/default', 'App'),
                 'options' => ['style' => 'width: 25px; align: center;'],
                 'value' => function ($model) {
                     return BS::appLabel($model->app_id);
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'category_id',
-                'label' => Yii::t('plugin', 'Category'),
+                'label' => Yii::t('plugins/default', 'Category'),
                 'value' => function ($model) {
                     if ($model->category_id) {
                         return BS::label($model->category->name);
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'trigger_class',
-                'label' => Yii::t('plugin', 'Trigger'),
+                'label' => Yii::t('plugins/default', 'Trigger'),
                 'value' => function ($model) {
                     return $model->trigger_class . BS::label('::') . $model->trigger_event;
                 },
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'handler_class',
-                'label' => Yii::t('plugin', 'Handler'),
+                'label' => Yii::t('plugins/default', 'Handler'),
                 'value' => function ($model) {
                     return $model->handler_class . BS::label('::') . $model->handler_method;
                 },
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'pos',
-                'label' => Yii::t('plugin', 'Pos.')
+                'label' => Yii::t('plugins/default', 'Pos.')
             ],
             [
                 'attribute' => 'status',
@@ -76,8 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->status == $model::STATUS_ACTIVE ? BS::label('Enabled', BS::TYPE_SUCCESS) : BS::label('Disabled', BS::TYPE_DANGER);
                 },
                 'filter' => [
-                    1 => Yii::t('plugin', 'Enabled'),
-                    0 => Yii::t('plugin', 'Disabled')
+                    1 => Yii::t('plugins/default', 'Enabled'),
+                    0 => Yii::t('plugins/default', 'Disabled')
                 ],
                 'format' => "raw"
             ],
@@ -89,15 +89,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($url) {
                         return Html::a('edit', $url, [
                             'class' => 'btn btn-xs btn-primary',
-                            'title' => Yii::t('plugin', 'Update'),
+                            'title' => Yii::t('plugins/default', 'Update'),
                         ]);
                     },
                     'delete' => function ($url) {
                         return Html::a('delete', $url, [
                             'class' => 'btn btn-xs btn-danger',
                             'data-method' => 'post',
-                            'data-confirm' => Yii::t('plugin', 'Are you sure to delete this item?'),
-                            'title' => Yii::t('plugin', 'Delete'),
+                            'data-confirm' => Yii::t('plugins/default', 'Are you sure to delete this item?'),
+                            'title' => Yii::t('plugins/default', 'Delete'),
                         ]);
                     },
                 ]

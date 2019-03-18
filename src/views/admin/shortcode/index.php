@@ -1,19 +1,23 @@
 <?php
 
 use panix\mod\plugins\helpers\BS;
+use panix\mod\plugins\models\App;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\StringHelper;
 
 /**
  * @var $this yii\web\View
- * @var $searchModel panix\mod\plugins\models\search\PluginSearch
+ * @var $searchModel panix\mod\plugins\models\search\ShortcodeSearch
  * @var $dataProvider yii\data\ActiveDataProvider
  */
 
-$this->title = Yii::t('plugin', 'Items');
+$this->title = Yii::t('plugins/default', 'Shortcodes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="item-index">
+<div class="shortcode-index">
+
     <?= $this->render('/_menu') ?>
 
     <?= GridView::widget([
@@ -22,41 +26,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute' => 'url',
-                'format' => "raw",
-                'options' => ['style' => 'width: 50px; align: center;'],
+                'attribute' => 'app_id',
+                'label' => Yii::t('plugins/default', 'App'),
+                'options' => ['style' => 'width: 25px; align: center;'],
                 'value' => function ($model) {
-                    if ($model->url) {
-                        return Html::a('link', $model->url, [
-                            'class' => 'btn btn-xs btn-' . BS::TYPE_PRIMARY,
-                            'target' => '_blank'
-                        ]);
-                    }
-                    return '';
+                    return BS::appLabel($model->app_id);
                 },
-                'filter' => false
+                'filter' => ArrayHelper::map(App::find()->orderBy('name')->all(), 'id', 'name'),
+                'format' => "raw"
             ],
-            'name',
+            'tag',
+            'tooltip',
             [
-                'attribute' => 'version',
-                'label' => Yii::t('plugin', 'Ver.'),
-                'options' => ['style' => 'width: 65px; align: center;'],
-                'filter' => false,
-                'format' => "raw",
+                'attribute' => 'data',
                 'value' => function ($model) {
-                    return BS::label($model->version);
-                }
+                    return StringHelper::truncate($model->data, 60);
+                },
             ],
-            'text:ntext',
             [
                 'attribute' => 'status',
                 'options' => ['style' => 'width: 75px; align: center;'],
                 'value' => function ($model) {
-                    return $model->status == $model::STATUS_ACTIVE ? '<span class="label label-success">Enabled</span>' : '<span class="label label-danger">Disabled</span>';
+                    return $model->status == $model::STATUS_ACTIVE ? BS::label('Enabled', BS::TYPE_SUCCESS) : BS::label('Disabled', BS::TYPE_DANGER);
                 },
                 'filter' => [
-                    1 => Yii::t('plugin', 'Enabled'),
-                    0 => Yii::t('plugin', 'Disabled')
+                    1 => Yii::t('plugins/default', 'Enabled'),
+                    0 => Yii::t('plugins/default', 'Disabled')
                 ],
                 'format' => "raw"
             ],
@@ -68,15 +63,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($url) {
                         return Html::a('edit', $url, [
                             'class' => 'btn btn-xs btn-primary',
-                            'title' => Yii::t('plugin', 'Update'),
+                            'title' => Yii::t('plugins/default', 'Update'),
                         ]);
                     },
                     'delete' => function ($url) {
-                        return Html::a('del', $url, [
+                        return Html::a('delete', $url, [
                             'class' => 'btn btn-xs btn-danger',
                             'data-method' => 'post',
-                            'data-confirm' => Yii::t('plugin', 'Are you sure to delete this item?'),
-                            'title' => Yii::t('plugin', 'Delete'),
+                            'data-confirm' => Yii::t('plugins/default', 'Are you sure to delete this item?'),
+                            'title' => Yii::t('plugins/default', 'Delete'),
                         ]);
                     },
                 ]

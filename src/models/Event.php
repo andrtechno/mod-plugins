@@ -62,18 +62,18 @@ class Event extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('plugin', 'ID'),
-            'app_id' => Yii::t('plugin', 'App ID'),
-            'plugin_id' => Yii::t('plugin', 'Plugin ID'),
-            'category_id' => Yii::t('plugin', 'Category'),
-            'trigger_class' => Yii::t('plugin', 'Trigger Class'),
-            'trigger_event' => Yii::t('plugin', 'Trigger Event'),
-            'handler_class' => Yii::t('plugin', 'Handler Class'),
-            'handler_method' => Yii::t('plugin', 'Handler Method'),
-            'data' => Yii::t('plugin', 'Data'),
-            'pos' => Yii::t('plugin', 'Position'),
-            'status' => Yii::t('plugin', 'Status'),
-            'text' => Yii::t('plugin', 'Text'),
+            'id' => Yii::t('plugins/default', 'ID'),
+            'app_id' => Yii::t('plugins/default', 'App ID'),
+            'plugin_id' => Yii::t('plugins/default', 'Plugin ID'),
+            'category_id' => Yii::t('plugins/default', 'Category'),
+            'trigger_class' => Yii::t('plugins/default', 'Trigger Class'),
+            'trigger_event' => Yii::t('plugins/default', 'Trigger Event'),
+            'handler_class' => Yii::t('plugins/default', 'Handler Class'),
+            'handler_method' => Yii::t('plugins/default', 'Handler Method'),
+            'data' => Yii::t('plugins/default', 'Data'),
+            'pos' => Yii::t('plugins/default', 'Position'),
+            'status' => Yii::t('plugins/default', 'Status'),
+            'text' => Yii::t('plugins/default', 'Text'),
         ];
     }
 

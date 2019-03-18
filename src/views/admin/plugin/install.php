@@ -8,8 +8,8 @@ use yii\widgets\ListView;
  * @var \yii\data\ArrayDataProvider $dataProvider
  */
 
-$this->title = Yii::t('plugin', 'Install');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('plugin', 'Items'), 'url' => ['info']];
+$this->title = Yii::t('plugins/default', 'Install');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'Items'), 'url' => ['info']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-find">

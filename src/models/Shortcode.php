@@ -59,16 +59,16 @@ class Shortcode extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('plugin', 'ID'),
-            'app_id' => Yii::t('plugin', 'App ID'),
-            'plugin_id' => Yii::t('plugin', 'Plugin ID'),
-            'category_id' => Yii::t('plugin', 'Category'),
-            'handler_class' => Yii::t('plugin', 'Handler Class'),
-            'tag' => Yii::t('plugin', 'Tag'),
-            'tooltip' => Yii::t('plugin', 'Tooltip'),
-            'data' => Yii::t('plugin', 'Data'),
-            'text' => Yii::t('plugin', 'Text'),
-            'status' => Yii::t('plugin', 'Status')
+            'id' => Yii::t('plugins/default', 'ID'),
+            'app_id' => Yii::t('plugins/default', 'App ID'),
+            'plugin_id' => Yii::t('plugins/default', 'Plugin ID'),
+            'category_id' => Yii::t('plugins/default', 'Category'),
+            'handler_class' => Yii::t('plugins/default', 'Handler Class'),
+            'tag' => Yii::t('plugins/default', 'Tag'),
+            'tooltip' => Yii::t('plugins/default', 'Tooltip'),
+            'data' => Yii::t('plugins/default', 'Data'),
+            'text' => Yii::t('plugins/default', 'Text'),
+            'status' => Yii::t('plugins/default', 'Status')
         ];
     }
 
