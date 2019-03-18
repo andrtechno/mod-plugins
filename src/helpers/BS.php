@@ -14,7 +14,7 @@ class BS extends Html
     /**
      * Bootstrap color modifier classes
      */
-    const TYPE_DEFAULT = 'default';
+    const TYPE_SECONDARY = 'secondary';
     const TYPE_PRIMARY = 'primary';
     const TYPE_SUCCESS = 'success';
     const TYPE_INFO = 'info';
@@ -25,22 +25,22 @@ class BS extends Html
     {
         switch ($app_id) {
             case BasePlugin::APP_FRONTEND:
-                return self::label('F', self::TYPE_PRIMARY);
+                return self::badge('F', self::TYPE_PRIMARY);
                 break;
             case BasePlugin::APP_COMMON:
-                return self::label('C', self::TYPE_SUCCESS);
+                return self::badge('C', self::TYPE_SUCCESS);
                 break;
             case BasePlugin::APP_BACKEND:
-                return self::label('B', self::TYPE_DANGER);
+                return self::badge('B', self::TYPE_DANGER);
                 break;
             case BasePlugin::APP_CONSOLE:
-                return self::label('S', self::TYPE_WARNING);
+                return self::badge('S', self::TYPE_WARNING);
                 break;
             case BasePlugin::APP_API:
-                return self::label('A', self::TYPE_INFO);
+                return self::badge('A', self::TYPE_INFO);
                 break;
             default:
-                return self::label('D', self::TYPE_DEFAULT);
+                return self::badge('D', self::TYPE_SECONDARY);
         }
     }
 
@@ -56,19 +56,19 @@ class BS extends Html
      *
      * Example(s):
      * ~~~
-     * echo BS::label('Default');
-     * echo BS::label('Primary', BS::TYPE_PRIMARY);
-     * echo BS::label('Success', BS::TYPE_SUCCESS);
+     * echo BS::badge('Default');
+     * echo BS::badge('Primary', BS::TYPE_PRIMARY);
+     * echo BS::badge('Success', BS::TYPE_SUCCESS);
      * ~~~
      *
      * @see http://getbootstrap.com/components/#labels
      *
      * @return string
      */
-    public static function label($content, $type = '', $options = [], $prefix = 'label label-', $tag = 'span')
+    public static function badge($content, $type = '', $options = [], $prefix = 'badge badge-', $tag = 'span')
     {
         if (!$type) {
-            $type = self::TYPE_DEFAULT;
+            $type = self::TYPE_SECONDARY;
         }
         $class = isset($options['class']) ? ' ' . $options['class'] : '';
         $options['class'] = $prefix . $type . $class;

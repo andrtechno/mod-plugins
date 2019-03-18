@@ -9,11 +9,11 @@ use yii\helpers\Html;
 
 if ($model->isInstalled()) {
     $name = 'Update';
-    $ver = BS::label($model->version) . ' to ' . BS::label($model->new_version, BS::TYPE_SUCCESS);
+    $ver = BS::badge($model->version) . ' to ' . BS::badge($model->new_version, BS::TYPE_SUCCESS);
     $class = BS::TYPE_SUCCESS;
 } else {
     $name = 'Install';
-    $ver = BS::label($model->new_version, BS::TYPE_PRIMARY);
+    $ver = BS::badge($model->new_version, BS::TYPE_PRIMARY);
     $class = BS::TYPE_PRIMARY;
 };
 

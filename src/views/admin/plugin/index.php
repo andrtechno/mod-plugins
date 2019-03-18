@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => false,
                 'format' => "raw",
                 'value' => function ($model) {
-                    return BS::label($model->version);
+                    return BS::badge($model->version);
                 }
             ],
             'text:ntext',
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'options' => ['style' => 'width: 75px; align: center;'],
                 'value' => function ($model) {
-                    return $model->status == $model::STATUS_ACTIVE ? '<span class="label label-success">Enabled</span>' : '<span class="label label-danger">Disabled</span>';
+                    return $model->status == $model::STATUS_ACTIVE ? '<span class="badge badge-success">Enabled</span>' : '<span class="badge badge-danger">Disabled</span>';
                 },
                 'filter' => [
                     1 => Yii::t('plugins/default', 'Enabled'),

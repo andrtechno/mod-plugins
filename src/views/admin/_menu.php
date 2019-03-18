@@ -4,7 +4,7 @@
  * This file is part of the yii2-plugins-system module
  */
 
-use yii\bootstrap\Nav;
+use yii\bootstrap4\Nav;
 
 echo Nav::widget([
     'options' => [

@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('plugins/default', 'Category'),
                 'value' => function ($model) {
                     if ($model->category_id) {
-                        return BS::label($model->category->name);
+                        return BS::badge($model->category->name);
                     }
                     return '';
                 },
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'trigger_class',
                 'label' => Yii::t('plugins/default', 'Trigger'),
                 'value' => function ($model) {
-                    return $model->trigger_class . BS::label('::') . $model->trigger_event;
+                    return $model->trigger_class . BS::badge('::') . $model->trigger_event;
                 },
                 'format' => "raw"
             ],
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'handler_class',
                 'label' => Yii::t('plugins/default', 'Handler'),
                 'value' => function ($model) {
-                    return $model->handler_class . BS::label('::') . $model->handler_method;
+                    return $model->handler_class . BS::badge('::') . $model->handler_method;
                 },
                 'format' => "raw"
             ],
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'options' => ['style' => 'width: 75px; align: center;'],
                 'value' => function ($model) {
-                    return $model->status == $model::STATUS_ACTIVE ? BS::label('Enabled', BS::TYPE_SUCCESS) : BS::label('Disabled', BS::TYPE_DANGER);
+                    return $model->status == $model::STATUS_ACTIVE ? BS::badge('Enabled', BS::TYPE_SUCCESS) : BS::badge('Disabled', BS::TYPE_DANGER);
                 },
                 'filter' => [
                     1 => Yii::t('plugins/default', 'Enabled'),
