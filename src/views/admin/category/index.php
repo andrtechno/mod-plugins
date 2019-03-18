@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::a(Yii::t('plugins/default', 'Create {modelClass}', [
         'modelClass' => Yii::t('plugins/default', 'Category')
     ]), ['create'], ['class' => 'btn btn-success pull-right']) ?>
-    <?= $this->render('/_menu') ?>
+    <?= $this->render('@plugins/views/admin/_menu') ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

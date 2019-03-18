@@ -14,7 +14,7 @@ $this->title = Yii::t('plugins/default', 'Items');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-index">
-    <?= $this->render('/_menu') ?>
+    <?= $this->render('@plugins/views/admin/_menu') ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

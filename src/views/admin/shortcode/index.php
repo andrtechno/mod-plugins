@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="shortcode-index">
 
-    <?= $this->render('/_menu') ?>
+    <?= $this->render('@plugins/views/admin/_menu') ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

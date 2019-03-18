@@ -14,17 +14,10 @@ class Module extends WebModule
     // Directory
     public $pluginsDir;
 
-    public function init2()
+    public function init()
     {
         parent::init();
 
-        /*if (!isset(Yii::$app->i18n->translations['plugin'])) {
-            Yii::$app->i18n->translations['plugin'] = [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'sourceLanguage' => 'en',
-                'basePath' => '@lo/plugins/messages'
-            ];
-        }*/
 
         //user did not define the Navbar?
         if (!$this->pluginsDir) {

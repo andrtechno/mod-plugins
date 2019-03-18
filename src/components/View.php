@@ -2,12 +2,12 @@
 
 namespace panix\mod\plugins\components;
 
+use Yii;
 use yii\web\View as WebView;
 
 /**
  * Class View
  * @package panix\mod\plugins\components
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class View extends WebView
 {
@@ -91,16 +91,7 @@ class View extends WebView
     }
 
     /**
-     * Marks the ending of an HTML page.
-     * @param bool $ajaxMode whether the view is rendering in AJAX mode.
-     * If true, the JS scripts registered at [[POS_READY]] and [[POS_LOAD]] positions
-     * will be rendered at the end of the view like normal scripts.
-     */
-    /**
-     * Marks the ending of an HTML page.
-     * @param bool $ajaxMode whether the view is rendering in AJAX mode.
-     * If true, the JS scripts registered at [[POS_READY]] and [[POS_LOAD]] positions
-     * will be rendered at the end of the view like normal scripts.
+     * @inheritdoc
      */
     public function endPage($ajaxMode = false)
     {
@@ -111,7 +102,30 @@ class View extends WebView
             $content = $endPage;
         } else {
             $content = $this->_body . $endPage;
-       }
+        }
+        $this->registerCss('
+        #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
+        #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
+        ', [], 'pixelion');
+
+        $copyright = '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
+        $content = str_replace(base64_decode('e2NvcHlyaWdodH0='), $copyright, $content);
+
+
+
+        if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
+            if (!Yii::$app->request->isAjax && !preg_match("#" . base64_decode('e2NvcHlyaWdodH0=') . "#", $content)) { // && !preg_match("/print/", $this->layout)
+                // die(\Yii::t('app', 'NO_COPYRIGHT'));
+
+                Yii::$app->controllerMap['maintenance'] = [
+                    'class' => 'panix\engine\maintenance\controllers\MaintenanceController',
+                    'title' => 'asddsa'
+                ];
+
+                Yii::$app->catchAll = ['maintenance/index', 'title' => 'zzzzzzzzzzzz'];
+
+            }
+        }
 
         echo strtr($content, [
             self::PH_HEAD => $this->renderHeadHtml(),
@@ -120,5 +134,8 @@ class View extends WebView
         ]);
 
         $this->clear();
+
+
+
     }
 }

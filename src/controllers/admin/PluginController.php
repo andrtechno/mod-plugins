@@ -2,17 +2,17 @@
 
 namespace panix\mod\plugins\controllers\admin;
 
-use panix\mod\plugins\Module;
-use panix\mod\plugins\services\PluginService;
-use panix\mod\plugins\models\Plugin;
-use panix\mod\plugins\models\search\PluginSearch;
 
-use panix\engine\controllers\AdminController;
 use Yii;
 use yii\base\Exception;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ArrayDataProvider;
+use panix\mod\plugins\Module;
+use panix\mod\plugins\services\PluginService;
+use panix\mod\plugins\models\Plugin;
+use panix\mod\plugins\models\search\PluginSearch;
+use panix\engine\controllers\AdminController;
 
 /**
  * Class PluginController

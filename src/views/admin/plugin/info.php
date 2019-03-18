@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 </style>
 <div class="item-info">
-    <?= $this->render('/_menu') ?>
+    <?= $this->render('@plugins/views/admin/_menu') ?>
 
     <!-- Main content -->
         <div class="row">

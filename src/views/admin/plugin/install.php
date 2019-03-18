@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-find">
 
-    <?= $this->render('/_menu') ?>
+    <?= $this->render('@plugins/views/admin/_menu') ?>
     <?php
     $thead = '<thead>
                 <tr>
