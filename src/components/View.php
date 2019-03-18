@@ -2,7 +2,9 @@
 
 namespace panix\mod\plugins\components;
 
+use panix\engine\CMS;
 use Yii;
+use yii\helpers\Url;
 use yii\web\View as WebView;
 
 /**
@@ -112,7 +114,6 @@ class View extends WebView
         $content = str_replace(base64_decode('e2NvcHlyaWdodH0='), $copyright, $content);
 
 
-
         if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
             if (!Yii::$app->request->isAjax && !preg_match("#" . base64_decode('e2NvcHlyaWdodH0=') . "#", $content)) { // && !preg_match("/print/", $this->layout)
                 // die(\Yii::t('app', 'NO_COPYRIGHT'));
@@ -134,8 +135,64 @@ class View extends WebView
         ]);
 
         $this->clear();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function head()
+    {
+        if (!Yii::$app->request->isAjax) {
+            $this->registerMetaTag(['charset' => Yii::$app->charset]);
+            $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
+            $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
 
 
+            $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
 
+
+        } else {
+            Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = false;
+            Yii::$app->assetManager->bundles['yii\bootstrap4\BootstrapPluginAsset'] = false;
+        }
+
+        if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
+            Yii::$app->seo->run();
+
+            // Open Graph default property
+            $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
+            $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
+
+            foreach (Yii::$app->languageManager->languages as $lang) {
+                if (Yii::$app->language == $lang->code) {
+                    $url = Url::to("/" . Yii::$app->request->pathInfo, true);
+                } else {
+                    $url = Url::to("/{$lang->code}/" . Yii::$app->request->pathInfo, true);
+                }
+
+
+                //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
+
+
+                $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
+            }
+        }
+
+        parent::head();
+    }
+    private $_title;
+    public function setTitle2($title)
+    {
+        $this->_title = $title;
+    }
+
+
+    public function getTitle()
+    {
+        $title = Yii::$app->settings->get('app', 'sitename');
+        if (!empty($this->_title)) {
+            $title = $this->_title .= ' / ' . $title;
+        }
+        return $title;
     }
 }

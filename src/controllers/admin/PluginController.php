@@ -65,7 +65,7 @@ class PluginController extends AdminController
      */
     public function actionInstall($id = null)
     {
-        try {
+       // try {
             $plugins = $this->pluginService->getPlugins($this->module->pluginsDir);
 
             $dataProvider = new ArrayDataProvider([
@@ -82,10 +82,11 @@ class PluginController extends AdminController
 
             return $this->render('install', compact('dataProvider'));
 
-        } catch (Exception $e) {
+       // } catch (Exception $e) {
+         //   print_r($e->getMessage());die;
             $this->pluginService->noty->error($e->getMessage());
-            return $this->redirect('index');
-        }
+          //  return $this->redirect('index');
+       // }
     }
 
     /**

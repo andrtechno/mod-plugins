@@ -81,7 +81,11 @@ class PluginService
      */
     public function getPlugins($dirs)
     {
+
         $this->pluginDirRepository->setDirs($dirs);
+
+
+
 
         $pluginsDiffDir = $this->getPluginsDiffDir();
         $pluginsDiffDb = $this->getPluginsDiffDb();
