@@ -5,14 +5,14 @@ namespace panix\mod\plugins\controllers;
 use panix\mod\plugins\models\search\CategorySearch;
 use Yii;
 use panix\mod\plugins\models\Category;
-use yii\web\Controller;
+use panix\engine\controllers\WebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
-class CategoryController extends Controller
+class CategoryController extends WebController
 {
     public function behaviors()
     {

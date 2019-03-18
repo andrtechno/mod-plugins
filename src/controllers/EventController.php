@@ -6,14 +6,14 @@ use panix\mod\plugins\models\Plugin;
 use Yii;
 use panix\mod\plugins\models\Event;
 use panix\mod\plugins\models\search\EventSearch;
-use yii\web\Controller;
+use panix\engine\controllers\WebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * EventController implements the CRUD actions for Event model.
  */
-class EventController extends Controller
+class EventController extends WebController
 {
     public function behaviors()
     {
