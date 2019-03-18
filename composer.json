@@ -21,7 +21,7 @@
     }
   ],
   "require": {
-    "loveorigami/yii2-jsoneditor": "*"
+    "bower-asset/jsoneditor": "~3.1"
   },
   "autoload": {
     "psr-4": {

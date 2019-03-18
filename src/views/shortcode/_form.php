@@ -1,7 +1,7 @@
 <?php
 
 use panix\mod\plugins\models\App;
-use lo\widgets\Jsoneditor;
+use panix\mod\plugins\assets\JsonEditor;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -25,7 +25,7 @@ $disabled = true;
             <?= $form->field($model, 'tooltip')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'data')->widget(Jsoneditor::class,
+            <?= $form->field($model, 'data')->widget(JsonEditor::class,
                 [
                     'editorOptions' => [
                         'modes' => ['code', 'form', 'text', 'tree', 'view'], // available modes

@@ -5,7 +5,7 @@ use panix\mod\plugins\models\Plugin;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use lo\widgets\Jsoneditor;
+use panix\mod\plugins\assets\JsonEditor;
 
 /**
  * @var $this yii\web\View
@@ -29,7 +29,7 @@ $disabled = $model->plugin_id != Plugin::EVENTS_CORE;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'data')->widget(Jsoneditor::class,
+            <?= $form->field($model, 'data')->widget(JsonEditor::class,
                 [
                     'editorOptions' => [
                         'modes' => ['code', 'form', 'text', 'tree', 'view'], // available modes
