@@ -180,19 +180,5 @@ class View extends WebView
 
         parent::head();
     }
-    private $_title;
-    public function setTitle2($title)
-    {
-        $this->_title = $title;
-    }
 
-
-    public function getTitle()
-    {
-        $title = Yii::$app->settings->get('app', 'sitename');
-        if (!empty($this->_title)) {
-            $title = $this->_title .= ' / ' . $title;
-        }
-        return $title;
-    }
 }
