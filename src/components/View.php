@@ -13,6 +13,13 @@ use yii\web\View as WebView;
  */
 class View extends WebView
 {
+
+    public function render22($view, $params = [], $context = null)
+    {
+        $viewFile = $this->findViewFile($view, $context);
+        return $this->renderFile($viewFile, $params, $context);
+    }
+
     /**
      * @event Event an event that is triggered by [[doBody()]].
      */
