@@ -14,6 +14,7 @@ use yii\web\View as WebView;
 class View extends WebView
 {
     public $h1;
+
     public function render22($view, $params = [], $context = null)
     {
         $viewFile = $this->findViewFile($view, $context);
@@ -112,11 +113,12 @@ class View extends WebView
         } else {
             $content = $this->_body . $endPage;
         }
-        $this->registerCss('
-        #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
-        #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
-        ', [], 'pixelion');
-
+        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+            $this->registerCss('
+                #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
+                #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
+                ', [], 'pixelion');
+        }
         $copyright = '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
         $content = str_replace(base64_decode('e2NvcHlyaWdodH0='), $copyright, $content);
 
@@ -149,7 +151,7 @@ class View extends WebView
      */
     public function head()
     {
-        if (!Yii::$app->request->isAjax) {
+        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
             $this->registerMetaTag(['charset' => Yii::$app->charset]);
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
@@ -165,9 +167,10 @@ class View extends WebView
             Yii::$app->seo->run();
 
             // Open Graph default property
-            $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
-            $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
-
+            if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
+                $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
+            }
             foreach (Yii::$app->languageManager->languages as $lang) {
                 if (Yii::$app->language == $lang->code) {
                     $url = Url::to("/" . Yii::$app->request->pathInfo, true);
