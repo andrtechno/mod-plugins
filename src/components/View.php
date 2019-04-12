@@ -13,7 +13,7 @@ use yii\web\View as WebView;
  */
 class View extends WebView
 {
-
+    public $h1;
     public function render22($view, $params = [], $context = null)
     {
         $viewFile = $this->findViewFile($view, $context);
@@ -153,8 +153,6 @@ class View extends WebView
             $this->registerMetaTag(['charset' => Yii::$app->charset]);
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
-
-
             $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
 
 
