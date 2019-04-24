@@ -14,6 +14,14 @@ use yii\web\View as WebView;
 class View extends WebView
 {
     public $h1;
+    private $seo_config;
+
+    public function init()
+    {
+        $this->seo_config = Yii::$app->settings->get('seo');
+        parent::init();
+
+    }
 
     public function render22($view, $params = [], $context = null)
     {
@@ -79,6 +87,22 @@ class View extends WebView
         $this->endPage(true);
 
         return ob_get_clean();
+    }
+
+
+    public function beginBody()
+    {
+
+        if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
+
+            $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{CODE}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
+
+            echo '<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $this->seo_config->google_tag_manager . '"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->' . PHP_EOL;
+        }
+        parent::beginBody();
     }
 
     /**
@@ -151,11 +175,23 @@ class View extends WebView
      */
     public function head()
     {
+
         if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
             $this->registerMetaTag(['charset' => Yii::$app->charset]);
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
             $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
+            if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
+                $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
+            }
+            if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
+                $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
+            }
+
+            if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
+                $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
+                $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
+            }
 
 
         } else {
