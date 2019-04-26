@@ -200,7 +200,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
 
         if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
-            Yii::$app->seo->run();
+
+                if(isset(Yii::$app->seo))
+                    Yii::$app->seo->run();
+
 
             // Open Graph default property
             if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
