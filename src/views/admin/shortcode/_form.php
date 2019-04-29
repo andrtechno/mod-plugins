@@ -1,7 +1,7 @@
 <?php
 
 use panix\mod\plugins\models\App;
-use panix\mod\plugins\assets\JsonEditor;
+use panix\mod\plugins\JsonEditor;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

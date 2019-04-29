@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\plugins\assets;
+namespace panix\mod\plugins;
 
 use yii\web\AssetBundle;
 
