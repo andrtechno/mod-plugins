@@ -13,61 +13,25 @@ use yii\web\View as WebView;
  */
 class View extends WebView
 {
-    public $h1;
-    private $seo_config;
-
-    public function init()
-    {
-        $this->seo_config = Yii::$app->settings->get('seo');
-        parent::init();
-
-    }
-
-    public function render22($view, $params = [], $context = null)
-    {
-        $viewFile = $this->findViewFile($view, $context);
-        return $this->renderFile($viewFile, $params, $context);
-    }
-
+    private $_body;
     /**
      * @event Event an event that is triggered by [[doBody()]].
      */
     const EVENT_DO_BODY = 'doBody';
 
+    public $h1;
+    private $seo_config;
+
+
     /**
      * @var string
      */
-    private $_body;
+
     private $_from_ajax = false;
 
-    /**
-     * Content manipulation. Need for correct replacement shortcodes
-     */
-    public function doBody()
-    {
-        if ($this->hasEventHandlers(self::EVENT_DO_BODY)) {
-            $event = new ViewEvent([
-                'content' => $this->_body,
-            ]);
-            $this->trigger(self::EVENT_DO_BODY, $event);
-            $this->_body = $event->content;
-        }
-    }
 
     /**
-     * Renders a view in response to an AJAX request.
-     *
-     * This method is similar to [[render()]] except that it will surround the view being rendered
-     * with the calls of [[beginPage()]], [[head()]], [[beginBody()]], [[endBody()]] and [[endPage()]].
-     * By doing so, the method is able to inject into the rendering result with JS/CSS scripts and files
-     * that are registered with the view.
-     *
-     * @param string $view the view name. Please refer to [[render()]] on how to specify this parameter.
-     * @param array $params the parameters (name-value pairs) that will be extracted and made available in the view file.
-     * @param object $context the context that the view should use for rendering the view. If null,
-     * existing [[context]] will be used.
-     * @return string the rendering result
-     * @see render()
+     * @inheritdoc
      */
     public function renderAjax($view, $params = [], $context = null)
     {
@@ -89,24 +53,23 @@ class View extends WebView
         return ob_get_clean();
     }
 
-
-    public function beginBody()
+    /**
+     * Content manipulation. Need for correct replacement shortcodes
+     */
+    public function doBody()
     {
-
-        if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
-
-            $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{CODE}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
-
-            echo '<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $this->seo_config->google_tag_manager . '"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->' . PHP_EOL;
+        if ($this->hasEventHandlers(self::EVENT_DO_BODY)) {
+            $event = new ViewEvent([
+                'content' => $this->_body,
+            ]);
+            $this->trigger(self::EVENT_DO_BODY, $event);
+            $this->_body = $event->content;
         }
-        parent::beginBody();
     }
 
+
     /**
-     * Marks the ending of an HTML body section.
+     * @inheritdoc
      */
     public function endBody()
     {
@@ -122,6 +85,90 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         foreach (array_keys($this->assetBundles) as $bundle) {
             $this->registerAssetFiles($bundle);
         }
+    }
+
+    public function init()
+    {
+        $this->seo_config = Yii::$app->settings->get('seo');
+        parent::init();
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beginBody()
+    {
+
+        if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
+
+            $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{CODE}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
+
+            echo '<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $this->seo_config->google_tag_manager . '"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->' . PHP_EOL;
+        }
+        parent::beginBody();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function head()
+    {
+
+        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+            $this->registerMetaTag(['charset' => Yii::$app->charset]);
+            $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
+            $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
+            $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
+            if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
+                $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
+            }
+            if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
+                $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
+            }
+
+            if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
+                $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
+                $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
+            }
+
+
+        } else {
+            Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = false;
+            Yii::$app->assetManager->bundles['yii\bootstrap4\BootstrapPluginAsset'] = false;
+        }
+
+        if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
+
+            if (isset(Yii::$app->seo))
+                Yii::$app->seo->run();
+
+
+            // Open Graph default property
+            if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
+                $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
+            }
+            foreach (Yii::$app->languageManager->languages as $lang) {
+                if (Yii::$app->language == $lang->code) {
+                    $url = Url::to("/" . Yii::$app->request->pathInfo, true);
+                } else {
+                    $url = Url::to("/{$lang->code}/" . Yii::$app->request->pathInfo, true);
+                }
+
+
+                //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
+
+
+                $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
+            }
+        }
+
+        parent::head();
     }
 
     /**
@@ -169,63 +216,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         $this->clear();
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function head()
-    {
-
-        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
-            $this->registerMetaTag(['charset' => Yii::$app->charset]);
-            $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
-            $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
-            $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
-            if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
-                $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
-            }
-            if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
-                $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
-            }
-
-            if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
-                $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
-                $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
-            }
-
-
-        } else {
-            Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = false;
-            Yii::$app->assetManager->bundles['yii\bootstrap4\BootstrapPluginAsset'] = false;
-        }
-
-        if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
-
-                if(isset(Yii::$app->seo))
-                    Yii::$app->seo->run();
-
-
-            // Open Graph default property
-            if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
-                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
-                $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
-            }
-            foreach (Yii::$app->languageManager->languages as $lang) {
-                if (Yii::$app->language == $lang->code) {
-                    $url = Url::to("/" . Yii::$app->request->pathInfo, true);
-                } else {
-                    $url = Url::to("/{$lang->code}/" . Yii::$app->request->pathInfo, true);
-                }
-
-
-                //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
-
-
-                $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
-            }
-        }
-
-        parent::head();
-    }
-
 }
