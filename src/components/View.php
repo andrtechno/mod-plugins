@@ -215,6 +215,9 @@ class View extends WebView
     }
 
 
+    /**
+     * @inheritdoc
+     */
     public function beforeRender($viewFile, $params)
     {
         if (Yii::$app->id != 'dashboard') {
@@ -248,13 +251,13 @@ class View extends WebView
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         $this->seo_config = Yii::$app->settings->get('seo');
-
         parent::init();
-
-
     }
 
     /**
@@ -262,8 +265,6 @@ class View extends WebView
      */
     public function beginBody()
     {
-
-
         if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
 
             $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{CODE}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
