@@ -372,7 +372,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         $content = str_replace(base64_decode('e2NvcHlyaWdodH0='), $copyright, $content);
 
 
-        if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
+        if (Yii::$app->id != 'dashboard') {
             if (!Yii::$app->request->isAjax && !preg_match("#" . base64_decode('e2NvcHlyaWdodH0=') . "#", $content)) { // && !preg_match("/print/", $this->layout)
                 // die(\Yii::t('app', 'NO_COPYRIGHT'));
 
