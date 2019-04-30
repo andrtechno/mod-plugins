@@ -8,8 +8,6 @@ use Yii;
 use yii\helpers\Url;
 use yii\web\View as WebView;
 use panix\mod\seo\models\SeoUrl;
-use panix\mod\seo\models\SeoMain;
-use panix\mod\seo\models\SeoParams;
 
 
 /**
@@ -23,6 +21,7 @@ class View extends WebView
      * @event Event an event that is triggered by [[doBody()]].
      */
     const EVENT_DO_BODY = 'doBody';
+
 
     public $h1;
     public $text;
@@ -216,6 +215,20 @@ class View extends WebView
     }
 
 
+    public function beforeRender($viewFile, $params)
+    {
+        if (Yii::$app->id != 'dashboard') {
+            $this->data = $this->getData();
+            if ($this->data) {
+                if ($this->data->h1)
+                    $this->h1 = $this->data->h1;
+                if ($this->data->text)
+                    $this->text = $this->data->text;
+            }
+        }
+        return parent::beforeRender($viewFile, $params);
+    }
+
     /**
      * @inheritdoc
      */
@@ -242,14 +255,6 @@ class View extends WebView
         parent::init();
 
 
-        $this->data = $this->getData();
-        if ($this->data) {
-            if ($this->data->h1)
-                $this->h1 = $this->data->h1;
-            if ($this->data->text)
-                $this->text = $this->data->text;
-        }
-
     }
 
     /**
@@ -257,6 +262,7 @@ class View extends WebView
      */
     public function beginBody()
     {
+
 
         if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
 
