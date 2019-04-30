@@ -27,7 +27,7 @@ class View extends WebView
     public $h1;
     public $text;
     private $seo_config;
-
+    protected $data;
 
     public function getData()
     {
@@ -54,14 +54,14 @@ class View extends WebView
                     }
                 }
             }
-            Yii::$app->view->title = $url->title;
+            $this->title = $url->title;
             //$this->printMeta('title', Yii::$app->view->title);
         } else {
             // if (!Yii::$app->view->title) {
             //     Yii::$app->view->title = Yii::$app->settings->get('app', 'site_name');
             // }
         }
-        $this->printMeta('title', Yii::$app->view->title);
+        $this->printMeta('title', $this->title->title);
         if ($url->description) {
             if (isset($url->params)) {
                 foreach ($url->params as $paramData) {
