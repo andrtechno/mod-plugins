@@ -214,24 +214,6 @@ class View extends WebView
         }
     }
 
-
-    /**
-     * @inheritdoc
-     */
-    public function beforeRender($viewFile, $params)
-    {
-        if (Yii::$app->id != 'dashboard') {
-            $this->data = $this->getData();
-            if ($this->data) {
-                if ($this->data->h1)
-                    $this->h1 = $this->data->h1;
-                if ($this->data->text)
-                    $this->text = $this->data->text;
-            }
-        }
-        return parent::beforeRender($viewFile, $params);
-    }
-
     /**
      * @inheritdoc
      */
@@ -258,6 +240,16 @@ class View extends WebView
     {
         $this->seo_config = Yii::$app->settings->get('seo');
         parent::init();
+
+        if (!preg_match("/admin/", Yii::$app->request->getUrl())) {
+            $this->data = $this->getData();
+            if ($this->data) {
+                if ($this->data->h1)
+                    $this->h1 = $this->data->h1;
+                if ($this->data->text)
+                    $this->text = $this->data->text;
+            }
+        }
     }
 
     /**
