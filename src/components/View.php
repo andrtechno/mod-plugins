@@ -34,7 +34,7 @@ class View extends WebView
 
     private $_from_ajax = false;
 
-    public function getData()
+    protected function getData()
     {
         $urls = $this->getUrls();
         foreach ($urls as $url) {
