@@ -29,6 +29,12 @@ class View extends WebView
     private $seo_config;
     protected $data;
 
+    /**
+     * @var string
+     */
+
+    private $_from_ajax = false;
+
     public function getData()
     {
         $urls = $this->getUrls();
@@ -61,7 +67,7 @@ class View extends WebView
             //     Yii::$app->view->title = Yii::$app->settings->get('app', 'site_name');
             // }
         }
-        $this->printMeta('title', $this->title->title);
+        $this->printMeta('title', $this->title);
         if ($url->description) {
             if (isset($url->params)) {
                 foreach ($url->params as $paramData) {
@@ -167,14 +173,9 @@ class View extends WebView
         //$result[] = "/*";
         //$result[] = "/";
         $result22 = array_unique($result);
+
         return $result22;
     }
-
-    /**
-     * @var string
-     */
-
-    private $_from_ajax = false;
 
 
     /**
@@ -237,7 +238,17 @@ class View extends WebView
     public function init()
     {
         $this->seo_config = Yii::$app->settings->get('seo');
+
         parent::init();
+
+
+        $this->data = $this->getData();
+        if ($this->data) {
+            if ($this->data->h1)
+                $this->h1 = $this->data->h1;
+            if ($this->data->text)
+                $this->text = $this->data->text;
+        }
 
     }
 
@@ -296,26 +307,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
             }
 
-            // if (isset(Yii::$app->seo))
-            //     Yii::$app->seo->run();
-
-
-            $titleFlag = false;
-            $urls = $this->getUrls();
-            foreach ($urls as $url) {
-                $urlF = SeoUrl::find()->where(['url' => $url])->one();
-
-                if ($urlF !== null) {
-                    $this->seoName($urlF);
-                    if (!empty($urlF->h1))
-                        $this->h1 = $urlF->h1;
-                    if (!empty($urlF->text))
-                        $this->text = $urlF->text;
-                    $titleFlag = false;
-                    break;
-                } else {
-                    $titleFlag = true;
-                }
+            if ($this->data) {
+                $this->seoName($this->data);
+                $titleFlag = false;
+            } else {
+                $titleFlag = true;
             }
 
             if ($titleFlag) {
