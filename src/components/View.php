@@ -3,9 +3,14 @@
 namespace panix\mod\plugins\components;
 
 use panix\engine\CMS;
+use panix\engine\Html;
 use Yii;
 use yii\helpers\Url;
 use yii\web\View as WebView;
+use panix\mod\seo\models\SeoUrl;
+use panix\mod\seo\models\SeoMain;
+use panix\mod\seo\models\SeoParams;
+
 
 /**
  * Class View
@@ -20,8 +25,150 @@ class View extends WebView
     const EVENT_DO_BODY = 'doBody';
 
     public $h1;
+    public $text;
     private $seo_config;
 
+
+    public function getData()
+    {
+        $urls = $this->getUrls();
+        foreach ($urls as $url) {
+            $urlF = SeoUrl::find()->where(['url' => $url])->one();
+            if ($urlF !== null) {
+                return $urlF;
+            }
+        }
+    }
+
+    private function seoName($url)
+    {
+        $controller = Yii::$app->controller;
+
+        if ($url->title) {
+            if (isset($url->params)) {
+                foreach ($url->params as $paramData) {
+                    $param = $this->getSeoparam($paramData);
+                    if ($param) {
+
+                        $url->title = str_replace('{' . $param['tpl'] . '}', $param['item'], $url->title);
+                    }
+                }
+            }
+            Yii::$app->view->title = $url->title;
+            //$this->printMeta('title', Yii::$app->view->title);
+        } else {
+            // if (!Yii::$app->view->title) {
+            //     Yii::$app->view->title = Yii::$app->settings->get('app', 'site_name');
+            // }
+        }
+        $this->printMeta('title', Yii::$app->view->title);
+        if ($url->description) {
+            if (isset($url->params)) {
+                foreach ($url->params as $paramData) {
+                    $param = $this->getSeoparam($paramData);
+                    if ($param) {
+                        $url->description = str_replace($param['tpl'], $param['item'], $url->description);
+                    }
+                }
+            }
+            $this->printMeta('description', $url->description);
+        } else {
+            if (isset($controller->description))
+                $this->printMeta('description', $controller->description);
+        }
+    }
+
+    private function printMeta($name, $content)
+    {
+
+        $content = strip_tags($content);
+        if ($name == "title") {
+            echo "<title>{$content}</title>\n";
+        } else {
+            $this->registerMetaTag(['name' => $name, 'content' => $content]);
+            // echo "<meta name=\"{$name}\" content=\"{$content}\" />\n";
+        }
+    }
+
+    private function getSeoparam($pdata)
+    {
+
+        $urls = Yii::$app->request->url;
+
+        $data = explode("/", $urls);
+        $id = $data[count($data) - 1];
+        /* если есть символ ">>" значит параметр по связи */
+
+        // $param = $pdata->obj;
+        $tpl = $pdata->param;
+        if (strstr($tpl, ".")) {
+            $paramType = true;
+            $data = explode(".", $tpl);
+            $tpl2 = explode("/", $data[0]);
+        } else {
+            $paramType = false;
+            $tpl2 = explode("/", $tpl);
+        }
+
+        if (class_exists($pdata->modelClass, false)) {
+            /** @var $item ActiveRecord */
+            $item = new $pdata->modelClass;
+            if (is_string($id)) {
+                $item = $item->find()->where(['seo_alias' => $id])->one();
+            } else {
+                $item = $item->one($id);
+            }
+
+            //echo $item['seo_alias'];die;
+            if (count($item)) {
+                // var_dump($pdata->param);
+                // var_dump($pdata->obj);die;
+                // if($pdata->obj){
+
+                return [
+                    'tpl' => $tpl,
+                    'item' => ($paramType) ? $item[$tpl2[1]][$data[1]] : $item[$tpl2[0]],
+                ];
+                // }
+            }
+        } else {
+
+            return false;
+        }
+    }
+
+    private function getUrls()
+    {
+        $result = null;
+        $urls = Yii::$app->request->url;
+        if (Yii::$app->languageManager->default->code != Yii::$app->language) {
+            $urls = str_replace('/' . Yii::$app->language, '', $urls);
+        }
+
+        $data = explode("/", $urls);
+        $count = count($data);
+
+        while (count($data)) {
+            $_url = "";
+            $i = 0;
+            foreach ($data as $key => $d) {
+                $_url .= $i++ ? "/" . $d : $d;
+            }
+            if ($count == 1) {
+                $result[] = $_url;
+                $result[] = $_url . "/*";
+            } else {
+                $result[] = $_url . "/*";
+                $result[] = $_url;
+            }
+
+            unset($data[$key]);
+        }
+        //$result[] = "/*";
+        //$result[] = "/";
+        $result22 = array_unique($result);
+        return $result22;
+    }
 
     /**
      * @var string
@@ -124,17 +271,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
             $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
-            if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
-                $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
-            }
-            if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
-                $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
-            }
-
-            if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
-                $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
-                $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
-            }
 
 
         } else {
@@ -144,8 +280,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
-            if (isset(Yii::$app->seo))
-                Yii::$app->seo->run();
+
+            if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
+                $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
+            }
+            if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
+                $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
+            }
+            if (isset($this->seo_config->canonical) && $this->seo_config->canonical) {
+                $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
+                $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
+            }
+            if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
+                $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
+                $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
+            }
+
+            // if (isset(Yii::$app->seo))
+            //     Yii::$app->seo->run();
+
+
+            $titleFlag = false;
+            $urls = $this->getUrls();
+            foreach ($urls as $url) {
+                $urlF = SeoUrl::find()->where(['url' => $url])->one();
+
+                if ($urlF !== null) {
+                    $this->seoName($urlF);
+                    if (!empty($urlF->h1))
+                        $this->h1 = $urlF->h1;
+                    if (!empty($urlF->text))
+                        $this->text = $urlF->text;
+                    $titleFlag = false;
+                    break;
+                } else {
+                    $titleFlag = true;
+                }
+            }
+
+            if ($titleFlag) {
+                $this->printMeta('title', Html::encode($this->title));
+            }
 
 
             // Open Graph default property
