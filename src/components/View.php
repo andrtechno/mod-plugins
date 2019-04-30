@@ -241,7 +241,7 @@ class View extends WebView
         $this->seo_config = Yii::$app->settings->get('seo');
         parent::init();
 
-        if (!preg_match("/admin/", Yii::$app->request->getUrl())) {
+        if (!$this->theme->name != 'dashboard') {
             $this->data = $this->getData();
             if ($this->data) {
                 if ($this->data->h1)
