@@ -119,12 +119,12 @@ class View extends WebView
             /** @var $item ActiveRecord */
             $item = new $pdata->modelClass;
             if (is_string($id)) {
-                $item = $item->find()->where(['seo_alias' => $id])->one();
+                $item = $item->find()->where(['slug' => $id])->one();
             } else {
                 $item = $item->one($id);
             }
 
-            //echo $item['seo_alias'];die;
+            //echo $item['slug'];die;
             if (count($item)) {
                 // var_dump($pdata->param);
                 // var_dump($pdata->obj);die;
