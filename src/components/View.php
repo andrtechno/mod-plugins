@@ -59,7 +59,7 @@ class View extends WebView
                     }
                 }
             }
-            $this->title = $url->title;
+            $this->title .= $url->title;
             //$this->printMeta('title', Yii::$app->view->title);
         } else {
             // if (!Yii::$app->view->title) {
@@ -311,6 +311,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 $titleFlag = false;
             } else {
                 $titleFlag = true;
+            }
+
+            if ($this->title) {
+                $this->title .= ' ' . $this->seo_config->title_prefix . ' ' . Yii::$app->settings->get('app', 'sitename');
+            } else {
+                $this->title .= Yii::$app->settings->get('app', 'sitename');
             }
 
             if ($titleFlag) {
