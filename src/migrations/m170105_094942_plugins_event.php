@@ -1,6 +1,8 @@
 <?php
 namespace panix\mod\plugins\migrations;
 
+use panix\mod\plugins\BasePlugin;
+
 class m170105_094942_plugins_event extends Migration
 {
 
@@ -9,7 +11,7 @@ class m170105_094942_plugins_event extends Migration
         $this->createTable($this->tn(self::TBL_EVENT), [
             'id' => $this->primaryKey(),
             'status' => $this->tinyInteger(1)->notNull()->defaultValue(0),
-            'app_id' => $this->integer()->notNull()->defaultValue(self::APP_FRONTEND),
+            'app_id' => $this->integer()->notNull()->defaultValue(BasePlugin::APP_WEB),
             'category_id' => $this->integer(),
             'plugin_id' => $this->integer()->notNull()->defaultValue(self::EVENTS_CORE),
             'trigger_class' => $this->string(),
@@ -51,7 +53,7 @@ class m170105_094942_plugins_event extends Migration
 
         $this->insert($this->tn(self::TBL_EVENT), [
             'id' => 1,
-            'app_id' => self::APP_FRONTEND,
+            'app_id' => BasePlugin::APP_WEB,
             'plugin_id' => self::EVENTS_CORE,
             'category_id' => self::CAT_SEO,
             'trigger_class' => 'yii\web\View',
@@ -64,7 +66,7 @@ class m170105_094942_plugins_event extends Migration
 
         $this->insert($this->tn(self::TBL_EVENT), [
             'id' => 2,
-            'app_id' => self::APP_FRONTEND,
+            'app_id' => BasePlugin::APP_WEB,
             'plugin_id' => self::EVENTS_CORE + 1, // Hello, world
             'category_id' => self::CAT_PLUGINS,
             'trigger_class' => 'yii\web\Response',

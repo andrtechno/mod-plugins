@@ -1,6 +1,8 @@
 <?php
 namespace panix\mod\plugins\migrations;
 
+use panix\mod\plugins\BasePlugin;
+
 class m170105_094958_plugins_shortcode extends Migration
 {
 
@@ -9,7 +11,7 @@ class m170105_094958_plugins_shortcode extends Migration
         $this->createTable($this->tn(self::TBL_SHORTCODE), [
             'id' => $this->primaryKey(),
             'status' => $this->tinyInteger(1)->notNull()->defaultValue(0),
-            'app_id' => $this->integer()->notNull()->defaultValue(self::APP_FRONTEND),
+            'app_id' => $this->integer()->notNull()->defaultValue(BasePlugin::APP_FRONTEND),
             'category_id' => $this->integer(),
             'plugin_id' => $this->integer()->notNull()->defaultValue(self::EVENTS_CORE),
             'handler_class' => $this->string(),

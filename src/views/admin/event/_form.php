@@ -5,7 +5,7 @@ use panix\mod\plugins\models\Plugin;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use panix\mod\plugins\assets\JsonEditor;
+use panix\mod\plugins\JsonEditor;
 
 /**
  * @var $this yii\web\View

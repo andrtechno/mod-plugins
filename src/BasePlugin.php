@@ -6,7 +6,6 @@ use panix\mod\plugins\interfaces\IPlugin;
 /**
  * Class BasePlugin
  * @package panix\mod\plugins
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 abstract class BasePlugin implements IPlugin
 {
@@ -15,6 +14,8 @@ abstract class BasePlugin implements IPlugin
     const APP_COMMON = 3;
     const APP_API = 4;
     const APP_CONSOLE = 5;
+    const APP_WEB = 6;
+
 
     /**
      * Application id, where plugin will be worked.

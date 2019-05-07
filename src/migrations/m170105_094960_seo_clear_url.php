@@ -2,6 +2,8 @@
 
 namespace panix\mod\plugins\migrations;
 
+use panix\mod\plugins\BasePlugin;
+
 class m170105_094960_seo_clear_url extends Migration
 {
 
@@ -9,7 +11,7 @@ class m170105_094960_seo_clear_url extends Migration
     {
         $this->insert($this->tn(self::TBL_EVENT), [
             'id' => 5,
-            'app_id' => self::APP_FRONTEND,
+            'app_id' => BasePlugin::APP_WEB,
             'plugin_id' => self::EVENTS_CORE, // Hello, world
             'category_id' => self::CAT_SEO,
             'trigger_class' => 'yii\base\Application',

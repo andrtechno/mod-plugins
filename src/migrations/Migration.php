@@ -1,7 +1,7 @@
 <?php
 namespace panix\mod\plugins\migrations;
 
-use panix\mod\plugins\BasePlugin;
+
 use panix\mod\plugins\models\Category;
 use panix\mod\plugins\models\Event;
 use panix\mod\plugins\models\Plugin;
@@ -21,12 +21,6 @@ class Migration extends \yii\db\Migration
     const CAT_PLUGINS = Category::CAT_PLUGINS;
     const CAT_SHORTCODES = Category::CAT_SHORTCODES;
     const CAT_SEO = Category::CAT_SEO;
-
-    const APP_FRONTEND = BasePlugin::APP_FRONTEND;
-    const APP_COMMON = BasePlugin::APP_COMMON;
-    const APP_BACKEND = BasePlugin::APP_BACKEND;
-    const APP_API = BasePlugin::APP_API;
-    const APP_CONSOLE = BasePlugin::APP_CONSOLE;
 
     const EVENTS_CORE = Plugin::EVENTS_CORE;
     const PLUGIN_ACTIVE = Plugin::STATUS_ACTIVE;
