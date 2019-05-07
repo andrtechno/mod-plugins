@@ -313,14 +313,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 $titleFlag = true;
             }
 
-            if ($this->title) {
-             //   $this->title .= ' ' . $this->seo_config->title_prefix . ' ' . Yii::$app->settings->get('app', 'sitename');
-            } else {
-             //   $this->title .= Yii::$app->settings->get('app', 'sitename');
-            }
-
             if ($titleFlag) {
-              //  $this->printMeta('title', Html::encode($this->title));
+                $this->printMeta('title', Html::encode($this->title));
             }
 
 
