@@ -119,7 +119,7 @@ class PluginController extends AdminController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => Plugin::findModel($id),
         ]);
     }
 
@@ -131,7 +131,15 @@ class PluginController extends AdminController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = Plugin::findModel($id);
+
+
+        $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
+                'modelClass' => 'Item',
+            ]) . ' ' . $model->name;
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['index']];
+        $this->breadcrumbs[] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+        $this->breadcrumbs[] = Yii::t('plugins/default', 'Update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -149,7 +157,7 @@ class PluginController extends AdminController
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
+        $model = Plugin::findModel($id);
 
         if ($model->id != $model::EVENTS_CORE) {
             $model->delete();
@@ -158,22 +166,6 @@ class PluginController extends AdminController
         }
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Plugin model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Plugin the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Plugin::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
 }

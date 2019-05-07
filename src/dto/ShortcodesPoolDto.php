@@ -7,7 +7,6 @@ use yii\helpers\ArrayHelper;
 /**
  * Class ShortcodesPoolDto
  * @package panix\mod\plugins\dto
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class ShortcodesPoolDto
 {

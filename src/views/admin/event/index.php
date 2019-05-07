@@ -21,7 +21,7 @@ use yii\grid\GridView;
     <div class="card-body">
         <div class="event-index">
             <?= Html::a(Yii::t('plugins/default', 'Create {modelClass}', [
-                'modelClass' => Yii::t('plugins/default', 'Event')
+                'modelClass' => Yii::t('plugins/default', 'EVENT')
             ]), ['create'], ['class' => 'btn btn-success pull-right']) ?>
             <?= $this->render('@plugins/views/admin/_menu') ?>
 

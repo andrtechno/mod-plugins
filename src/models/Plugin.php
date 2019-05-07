@@ -4,7 +4,7 @@ namespace panix\mod\plugins\models;
 
 use panix\mod\plugins\models\query\PluginQuery;
 use Yii;
-use yii\db\ActiveRecord;
+use panix\engine\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%plugins__plugin}}".

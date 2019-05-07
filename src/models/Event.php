@@ -2,13 +2,13 @@
 
 namespace panix\mod\plugins\models;
 
+use Yii;
 use panix\mod\plugins\helpers\JsonHelper;
 use panix\mod\plugins\models\query\EventQuery;
 use panix\mod\plugins\validators\CallableValidator;
 use panix\mod\plugins\validators\ClassNameValidator;
 use panix\mod\plugins\validators\JsonValidator;
-use Yii;
-use yii\db\ActiveRecord;
+use panix\engine\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%plugins__event}}".

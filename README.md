@@ -42,7 +42,7 @@ $ php yii migrate
 
 ### 3. Configure application
 
-Let's start with defining module in `@backend/config/main.php`:
+Let's start with defining module in `@app/config/main.php`:
 
 ```php
 'modules' => [
@@ -57,7 +57,7 @@ Let's start with defining module in `@backend/config/main.php`:
 ```
 That's all, now you have module installed and configured in advanced template.
 
-Next, open `@frontend/config/main.php` and add following:
+Next, open `@app/config/main.php` and add following:
 
 ```php
 ...
@@ -66,7 +66,7 @@ Next, open `@frontend/config/main.php` and add following:
 'components' => [
     'plugins' => [
         'class' => panix\mod\plugins\components\PluginsManager::class,
-        'appId' => 1 // panix\mod\plugins\BasePlugin::APP_FRONTEND,
+        'appId' => panix\mod\plugins\BasePlugin::APP_WEB, // or APP_FRONTEND
         // by default
         'enablePlugins' => true,
         'shortcodesParse' => true,

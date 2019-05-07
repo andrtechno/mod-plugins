@@ -1,30 +1,23 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use panix\engine\bootstrap\ActiveForm;
 
 /**
  * @var $this yii\web\View
  * @var $model panix\mod\plugins\models\Category
- * @var $form yii\widgets\ActiveForm
  */
 ?>
-
-<div class="event-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <div class="row">
-
-        <div class="col-md-12">
+<?php $form = ActiveForm::begin(); ?>
+    <div class="card">
+        <div class="card-header">
+            <h5><?= $this->context->pageName; ?></h5>
+        </div>
+        <div class="card-body">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
+        <div class="card-footer text-center">
+            <?= $model->submitButton(); ?>
+        </div>
     </div>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('plugins/default', 'Create') : Yii::t('plugins/default', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
+<?php ActiveForm::end(); ?>

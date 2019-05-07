@@ -52,7 +52,7 @@ class ShortcodeController extends AdminController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => Shortcode::findModel($id),
         ]);
     }
 
@@ -82,7 +82,13 @@ class ShortcodeController extends AdminController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = Shortcode::findModel($id);
+
+        $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
+                'modelClass' => 'Shortcode',
+            ]) . ' ' . $model->tag;
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Shortcodes'), 'url' => ['index']];
+        $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -101,24 +107,9 @@ class ShortcodeController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        Shortcode::findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Shortcode model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Shortcode the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Shortcode::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }

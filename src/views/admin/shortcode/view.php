@@ -27,12 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'plugin_id',
-            'trigger_class',
-            'trigger_event',
             'handler_class',
-            'handler_method',
             'data',
-            'pos',
             'status',
         ],
     ]) ?>

@@ -9,7 +9,6 @@ use Yii;
 /**
  * Class ShortcodeHandler
  * @package panix\mod\plugins\core
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class ShortcodeHandler
 {

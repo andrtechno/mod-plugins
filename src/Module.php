@@ -8,11 +8,12 @@ use panix\engine\WebModule;
 
 class Module extends WebModule
 {
-   // public $controllerNamespace = 'panix\mod\plugins\controllers';
-   // public $defaultRoute = 'plugin';
+    // public $controllerNamespace = 'panix\mod\plugins\controllers';
+    public $defaultRoute = 'plugin';
 
     // Directory
     public $pluginsDir;
+    public $icon = 'chip';
 
     public function init()
     {
@@ -21,7 +22,7 @@ class Module extends WebModule
 
         //user did not define the Navbar?
         if (!$this->pluginsDir) {
-          throw new InvalidConfigException('"pluginsDir" must be set');
+            throw new InvalidConfigException('"pluginsDir" must be set');
         }
     }
 
@@ -29,11 +30,11 @@ class Module extends WebModule
     public function getAdminMenu()
     {
         return [
-            'modules' => [
+            'system' => [
                 'items' => [
                     [
-                        'label' => Yii::t('seo/default', 'MODULE_NAME'),
-                        'url' => ['/admin/seo'],
+                        'label' => Yii::t('plugins/default', 'MODULE_NAME'),
+                        'url' => ['/admin/plugins/plugin/index'],
                         'icon' => $this->icon,
                     ],
                 ],

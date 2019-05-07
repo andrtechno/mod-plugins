@@ -8,9 +8,8 @@ use panix\mod\plugins\repositories\ShortcodeDbRepositoryMap;
 use yii\helpers\ArrayHelper;
 
 /**
- * Class ShortcodesCallbackDto
+ * Class ShortcodesDbCallbacksDto
  * @package panix\mod\plugins\dto
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class ShortcodesDbCallbacksDto
 {

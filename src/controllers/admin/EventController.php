@@ -36,7 +36,7 @@ class EventController extends AdminController
         $searchModel = new EventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $this->pageName = Yii::t('plugins/default', 'Events');
+        $this->pageName = Yii::t('plugins/default', 'EVENTS');
         $this->breadcrumbs[] = $this->pageName;
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -52,7 +52,7 @@ class EventController extends AdminController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => Event::findModel($id),
         ]);
     }
 
@@ -83,7 +83,14 @@ class EventController extends AdminController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = Event::findModel($id);
+
+        $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
+                'modelClass' => 'Event',
+            ]) . ' ' . $model->plugin->name;
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'EVENTS'), 'url' => ['index']];
+        $this->breadcrumbs[] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+        $this->breadcrumbs[] = Yii::t('plugins/default', 'Update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -102,24 +109,9 @@ class EventController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        Event::findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Event model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Event the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Event::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }

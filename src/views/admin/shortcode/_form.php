@@ -13,14 +13,13 @@ use yii\widgets\ActiveForm;
  */
 $disabled = true;
 ?>
-<div class="card">
-    <div class="card-header">
-        <h5><?= $this->context->pageName; ?></h5>
-    </div>
-    <div class="card-body">
-        <div class="event-form">
+<?php $form = ActiveForm::begin(); ?>
+    <div class="card">
+        <div class="card-header">
+            <h5><?= $this->context->pageName; ?></h5>
+        </div>
+        <div class="card-body">
 
-            <?php $form = ActiveForm::begin(); ?>
 
             <div class="row">
                 <div class="col-md-4">
@@ -57,13 +56,9 @@ $disabled = true;
                     <?= $form->field($model, 'text')->textarea() ?>
                 </div>
             </div>
-
-
-            <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('plugins/default', 'Create') : Yii::t('plugins/default', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
+        </div>
+        <div class="card-footer text-center">
+            <?= $model->submitButton(); ?>
         </div>
     </div>
-</div>
+<?php ActiveForm::end(); ?>

@@ -9,7 +9,6 @@ use yii\helpers\Json;
 /**
  * Class EventsDiffDto
  * @package panix\mod\plugins\dto
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class EventsDiffDto
 {

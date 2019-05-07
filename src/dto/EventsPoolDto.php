@@ -6,7 +6,6 @@ use yii\helpers\ArrayHelper;
 /**
  * Class EventsPoolDto
  * @package panix\mod\plugins\dto
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class EventsPoolDto
 {

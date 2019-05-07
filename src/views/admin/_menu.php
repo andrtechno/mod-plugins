@@ -1,9 +1,5 @@
 <?php
 
-/* 
- * This file is part of the yii2-plugins-system module
- */
-
 use yii\bootstrap4\Nav;
 
 echo Nav::widget([
@@ -17,7 +13,7 @@ echo Nav::widget([
             'url' => ['/admin/plugins/plugin/index'],
         ],
         [
-            'label' => Yii::t('plugins/default', 'Events'),
+            'label' => Yii::t('plugins/default', 'EVENTS'),
             'url' => ['/admin/plugins/event/index'],
         ],
         [

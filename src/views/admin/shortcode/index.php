@@ -30,6 +30,7 @@ use yii\helpers\StringHelper;
             [
                 'attribute' => 'app_id',
                 'label' => Yii::t('plugins/default', 'App'),
+                'contentOptions' => ['class' => 'text-center'],
                 'options' => ['style' => 'width: 25px; align: center;'],
                 'value' => function ($model) {
                     return BS::appLabel($model->app_id);
@@ -48,12 +49,13 @@ use yii\helpers\StringHelper;
             [
                 'attribute' => 'status',
                 'options' => ['style' => 'width: 75px; align: center;'],
+                'contentOptions' => ['class' => 'text-center'],
                 'value' => function ($model) {
-                    return $model->status == $model::STATUS_ACTIVE ? BS::badge('Enabled', BS::TYPE_SUCCESS) : BS::badge('Disabled', BS::TYPE_DANGER);
+                    return $model->status == $model::STATUS_ACTIVE ? BS::badge(Yii::t('app', 'ON'), BS::TYPE_SUCCESS) : BS::badge(Yii::t('app', 'OFF'), BS::TYPE_DANGER);
                 },
                 'filter' => [
-                    1 => Yii::t('plugins/default', 'Enabled'),
-                    0 => Yii::t('plugins/default', 'Disabled')
+                    1 => Yii::t('app', 'ON'),
+                    0 => Yii::t('app', 'OFF')
                 ],
                 'format' => "raw"
             ],

@@ -1,14 +1,15 @@
 <?php
 
 return [
+    'MODULE_NAME' => 'Плагины',
     '"{attribute}" must be a callable as [{callableValue}::{value}]' => '"{attribute}" должен находится в классе  [{callableValue}::{value}]',
     '"{attribute}" must be a valid JSON' => '"{attribute}" должен содержать валидный JSON',
     'Are you sure to delete this item?' => 'Уверены, что хотите удалить эту запись?',
     'App' => 'App',
     'App Id' => 'App Id',
     'AUTHOR' => 'Автор',
-    'PLUGIN_NAME'=>'Название плагина',
-    'PLUGIN_DESCRIPTION'=>'Описание плагина',
+    'PLUGIN_NAME' => 'Название плагина',
+    'PLUGIN_DESCRIPTION' => 'Описание плагина',
     'Author Url' => 'Url автора',
     'Categories' => 'Категории',
     'Category' => 'Категория',
@@ -20,8 +21,8 @@ return [
     'Delete' => 'Удалить',
     'Disabled' => 'Не активно',
     'Enabled' => 'Активно',
-    'Event' => 'Событие',
-    'Events' => 'События',
+    'EVENT' => 'Событие',
+    'EVENTS' => 'События',
     'Handler' => 'Handler',
     'Handler Class' => 'Handler class',
     'Handler Method' => 'Handler method',

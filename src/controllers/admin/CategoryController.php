@@ -50,7 +50,7 @@ class CategoryController extends AdminController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => Category::findModel($id),
         ]);
     }
 
@@ -62,6 +62,12 @@ class CategoryController extends AdminController
     public function actionCreate()
     {
         $model = new Category();
+
+        $this->pageName = Yii::t('plugins/default', 'Create {modelClass}: ', [
+                'modelClass' => 'Category',
+            ]);
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
+        $this->breadcrumbs[] = Yii::t('app', 'CREATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -80,7 +86,12 @@ class CategoryController extends AdminController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = Category::findModel($id);
+        $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
+                'modelClass' => 'Category',
+            ]) . ' ' . $model->name;
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
+        $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -99,24 +110,9 @@ class CategoryController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        Category::findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Category model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Category the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Category::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }

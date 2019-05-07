@@ -39,6 +39,9 @@ class BS extends Html
             case BasePlugin::APP_API:
                 return self::badge('A', self::TYPE_INFO);
                 break;
+            case BasePlugin::APP_WEB:
+                return self::badge('W', self::TYPE_INFO);
+                break;
             default:
                 return self::badge('D', self::TYPE_SECONDARY);
         }
