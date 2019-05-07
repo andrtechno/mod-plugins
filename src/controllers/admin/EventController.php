@@ -36,6 +36,8 @@ class EventController extends AdminController
         $searchModel = new EventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $this->pageName = Yii::t('plugins/default', 'Events');
+        $this->breadcrumbs[] = $this->pageName;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

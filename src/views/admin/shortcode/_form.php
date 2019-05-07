@@ -13,52 +13,57 @@ use yii\widgets\ActiveForm;
  */
 $disabled = true;
 ?>
+<div class="card">
+    <div class="card-header">
+        <h5><?= $this->context->pageName; ?></h5>
+    </div>
+    <div class="card-body">
+        <div class="event-form">
 
-<div class="event-form">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'handler_class')->textInput(['disabled' => $disabled, 'maxlength' => true]) ?>
-            <?= $form->field($model, 'tag')->textInput(['disabled' => $disabled, 'maxlength' => true]) ?>
-            <?= $form->field($model, 'tooltip')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'data')->widget(JsonEditor::class,
-                [
-                    'editorOptions' => [
-                        'modes' => ['code', 'form', 'text', 'tree', 'view'], // available modes
-                        'mode' => 'form', // current mode
-                    ],
-                    'options' => ['style' => 'height:225px'], // html options
-                ]
-            ); ?>
-        </div>
-        <div class="col-md-4">
             <div class="row">
-                <div class="col-md-6">
-                    <?= $form->field($model, 'app_id')->dropDownList(ArrayHelper::map(App::find()->all(), 'id', 'name')) ?>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'handler_class')->textInput(['disabled' => $disabled, 'maxlength' => true]) ?>
+                    <?= $form->field($model, 'tag')->textInput(['disabled' => $disabled, 'maxlength' => true]) ?>
+                    <?= $form->field($model, 'tooltip')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-6">
-                        <?= $form->field($model, 'status')->dropDownList([
-                            $model::STATUS_INACTIVE => Yii::t('plugins/default', 'Disabled'),
-                            $model::STATUS_ACTIVE => Yii::t('plugins/default', 'Enabled')
-                        ]) ?>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'data')->widget(JsonEditor::class,
+                        [
+                            'editorOptions' => [
+                                'modes' => ['code', 'form', 'text', 'tree', 'view'], // available modes
+                                'mode' => 'form', // current mode
+                            ],
+                            'options' => ['style' => 'height:225px'], // html options
+                        ]
+                    ); ?>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'app_id')->dropDownList(ArrayHelper::map(App::find()->all(), 'id', 'name')) ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'status')->dropDownList([
+                                $model::STATUS_INACTIVE => Yii::t('plugins/default', 'Disabled'),
+                                $model::STATUS_ACTIVE => Yii::t('plugins/default', 'Enabled')
+                            ]) ?>
+                        </div>
+                    </div>
+                    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(\panix\mod\plugins\models\Category::find()->orderBy('name')->all(), 'id', 'name'), [
+                        'prompt' => ' '
+                    ]) ?>
+                    <?= $form->field($model, 'text')->textarea() ?>
                 </div>
             </div>
-            <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(\panix\mod\plugins\models\Category::find()->orderBy('name')->all(), 'id', 'name'), [
-                'prompt' => ' '
-            ]) ?>
-            <?= $form->field($model, 'text')->textarea() ?>
+
+
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('plugins/default', 'Create') : Yii::t('plugins/default', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
-
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('plugins/default', 'Create') : Yii::t('plugins/default', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

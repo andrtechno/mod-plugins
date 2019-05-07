@@ -36,7 +36,8 @@ class ShortcodeController extends AdminController
     {
         $searchModel = new ShortcodeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $this->pageName = Yii::t('plugins/default', 'Shortcodes');
+        $this->breadcrumbs[] = $this->pageName;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

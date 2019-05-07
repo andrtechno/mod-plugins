@@ -24,4 +24,20 @@ class Module extends WebModule
           throw new InvalidConfigException('"pluginsDir" must be set');
         }
     }
+
+
+    public function getAdminMenu()
+    {
+        return [
+            'modules' => [
+                'items' => [
+                    [
+                        'label' => Yii::t('seo/default', 'MODULE_NAME'),
+                        'url' => ['/admin/seo'],
+                        'icon' => $this->icon,
+                    ],
+                ],
+            ]
+        ];
+    }
 }

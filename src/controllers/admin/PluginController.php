@@ -53,6 +53,9 @@ class PluginController extends AdminController
         $searchModel = new PluginSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $this->pageName = Yii::t('plugins/default', 'PLUGINS');
+        $this->breadcrumbs[] = $this->pageName;
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -67,6 +70,12 @@ class PluginController extends AdminController
     {
        // try {
             $plugins = $this->pluginService->getPlugins($this->module->pluginsDir);
+
+
+        $this->pageName = Yii::t('plugins/default', 'Install');
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['info']];
+        $this->breadcrumbs[] = $this->pageName;
+
 
             $dataProvider = new ArrayDataProvider([
                 'allModels' => $plugins,
@@ -95,6 +104,10 @@ class PluginController extends AdminController
      */
     public function actionInfo()
     {
+        $this->pageName = Yii::t('plugins/default', 'Info');
+        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['info']];
+        $this->breadcrumbs[] = $this->pageName;
+
         return $this->render('info');
     }
 

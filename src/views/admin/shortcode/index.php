@@ -3,7 +3,7 @@
 use panix\mod\plugins\helpers\BS;
 use panix\mod\plugins\models\App;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use panix\engine\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
 
@@ -13,9 +13,12 @@ use yii\helpers\StringHelper;
  * @var $dataProvider yii\data\ActiveDataProvider
  */
 
-$this->title = Yii::t('plugins/default', 'Shortcodes');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="card">
+    <div class="card-header">
+        <h5><?= $this->context->pageName; ?></h5>
+    </div>
+    <div class="card-body">
 <div class="shortcode-index">
 
     <?= $this->render('@plugins/views/admin/_menu') ?>
@@ -24,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'app_id',
                 'label' => Yii::t('plugins/default', 'App'),
@@ -56,19 +58,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => "raw"
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'panix\engine\grid\columns\ActionColumn',
+                'filter'=>false,
                 'template' => '{update} {delete}',
                 'options' => ['style' => 'width: 75px;'],
                 'buttons' => [
                     'update' => function ($url) {
-                        return Html::a('edit', $url, [
-                            'class' => 'btn btn-xs btn-primary',
+                        return Html::a(Html::icon('edit'), $url, [
+                            'class' => 'btn btn-sm btn-outline-secondary',
                             'title' => Yii::t('plugins/default', 'Update'),
                         ]);
                     },
                     'delete' => function ($url) {
-                        return Html::a('delete', $url, [
-                            'class' => 'btn btn-xs btn-danger',
+                        return Html::a(Html::icon('delete'), $url, [
+                            'class' => 'btn btn-sm btn-outline-danger',
                             'data-method' => 'post',
                             'data-confirm' => Yii::t('plugins/default', 'Are you sure to delete this item?'),
                             'title' => Yii::t('plugins/default', 'Delete'),
@@ -78,5 +81,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
+</div>
+</div>
 </div>

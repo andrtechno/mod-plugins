@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model panix\mod\plugins\models\Plugin */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'Items'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-view">
