@@ -116,7 +116,7 @@ class View extends WebView
         }
 
         if (class_exists($pdata->modelClass, false)) {
-            /** @var $item ActiveRecord */
+            /** @var $item yii/db/ActiveRecord */
             $item = new $pdata->modelClass;
             if (is_string($id)) {
                 $item = $item->find()->where(['slug' => $id])->one();
@@ -314,13 +314,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             }
 
             if ($this->title) {
-                $this->title .= ' ' . $this->seo_config->title_prefix . ' ' . Yii::$app->settings->get('app', 'sitename');
+             //   $this->title .= ' ' . $this->seo_config->title_prefix . ' ' . Yii::$app->settings->get('app', 'sitename');
             } else {
-                $this->title .= Yii::$app->settings->get('app', 'sitename');
+             //   $this->title .= Yii::$app->settings->get('app', 'sitename');
             }
 
             if ($titleFlag) {
-                $this->printMeta('title', Html::encode($this->title));
+              //  $this->printMeta('title', Html::encode($this->title));
             }
 
 
