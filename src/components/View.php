@@ -291,50 +291,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
 
-            if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
-                $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
-            }
-            if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
-                $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
-            }
-            if (isset($this->seo_config->canonical) && $this->seo_config->canonical) {
-                $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
-                $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
-            }
-            if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
-                $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
-                $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
-            }
-
-            if ($this->data) {
-                $this->seoName($this->data);
-                $titleFlag = false;
-            } else {
-                $titleFlag = true;
-            }
-
-            if ($titleFlag) {
-                $this->printMeta('title', Html::encode($this->title));
-            }
-
-
             // Open Graph default property
             if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
-                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
-                $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
-            }
-            foreach (Yii::$app->languageManager->languages as $lang) {
-                if (Yii::$app->language == $lang->code) {
-                    $url = Url::to("/" . Yii::$app->request->pathInfo, true);
-                } else {
-                    $url = Url::to("/{$lang->code}/" . Yii::$app->request->pathInfo, true);
+                if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
+                    $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
+                    $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
                 }
 
 
-                //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
+                if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
+                    $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
+                }
+                if (isset($this->seo_config->google_site_verification) && !empty($this->seo_config->google_site_verification)) {
+                    $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
+                }
+
+                if (isset($this->seo_config->canonical) && $this->seo_config->canonical) {
+                    $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
+                    $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
+                }
+
+                if ($this->data) {
+                    $this->seoName($this->data);
+                    $titleFlag = false;
+                } else {
+                    $titleFlag = true;
+                }
+
+                if ($titleFlag) {
+                    $this->printMeta('title', Html::encode($this->title));
+                }
+                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
+                $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
+
+                foreach (Yii::$app->languageManager->languages as $lang) {
+                    if (Yii::$app->language == $lang->code) {
+                        $url = Url::to("/" . Yii::$app->request->pathInfo, true);
+                    } else {
+                        $url = Url::to("/{$lang->code}/" . Yii::$app->request->pathInfo, true);
+                    }
 
 
-                $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
+                    //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
+
+
+                    $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
+                }
             }
         }
 
