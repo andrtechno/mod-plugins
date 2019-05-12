@@ -44,7 +44,7 @@ class View extends WebView
             }
         }
     }
-
+//835652742:AAES6NfEgJm7GMWmKzxkOy861ppAHkCezZo
     private function seoName($url)
     {
         $controller = Yii::$app->controller;
@@ -54,7 +54,6 @@ class View extends WebView
                 foreach ($url->params as $paramData) {
                     $param = $this->getSeoparam($paramData);
                     if ($param) {
-
                         $url->title = str_replace('{' . $param['tpl'] . '}', $param['item'], $url->title);
                     }
                 }
