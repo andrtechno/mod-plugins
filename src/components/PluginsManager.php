@@ -1,4 +1,5 @@
 <?php
+
 namespace panix\mod\plugins\components;
 
 use panix\mod\plugins\core\ShortcodeHandler;
@@ -14,7 +15,6 @@ use yii\base\InvalidConfigException;
 /**
  * Class PluginManager
  * @package panix\mod\plugins\components
- * @author Lukyanov Andrey <loveorigami@mail.ru>
  */
 class PluginsManager extends Component implements BootstrapInterface
 {
@@ -58,21 +58,22 @@ class PluginsManager extends Component implements BootstrapInterface
      */
     public function bootstrap($app)
     {
+        if (!preg_match("/admin/", Yii::$app->request->getUrl())) {
+            if (!isset($app->plugins)) {
+                throw new InvalidConfigException('Component "plugins" must be set');
+            }
 
-        if (!isset($app->plugins)) {
-            throw new InvalidConfigException('Component "plugins" must be set');
-        }
+            if ($this->enablePlugins && $this->appId) {
+                $this->registerEvents($this->appId);
+            }
 
-        if ($this->enablePlugins && $this->appId) {
-            $this->registerEvents($this->appId);
-        }
-
-        if ($this->shortcodesParse) {
-            Yii::$container->setSingleton(ShortcodeParser::class);
-            Yii::$container->set(ShortcodeService::class);
-            Event::on(View::class, View::EVENT_DO_BODY, [
-                ShortcodeHandler::class, ShortcodeHandler::PARSE_SHORTCODES
-            ], $this);
+            if ($this->shortcodesParse) {
+                Yii::$container->setSingleton(ShortcodeParser::class);
+                Yii::$container->set(ShortcodeService::class);
+                Event::on(View::class, View::EVENT_DO_BODY, [
+                    ShortcodeHandler::class, ShortcodeHandler::PARSE_SHORTCODES
+                ], $this);
+            }
         }
     }
 

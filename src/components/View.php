@@ -44,6 +44,7 @@ class View extends WebView
             }
         }
     }
+
 //835652742:AAES6NfEgJm7GMWmKzxkOy861ppAHkCezZo
     private function seoName($url)
     {
@@ -191,8 +192,10 @@ class View extends WebView
         $this->beginPage();
         $this->head();
         $this->beginBody();
+
         $this->doBody();
         echo $this->_body;
+
         $this->endBody();
         $this->endPage(true);
 
@@ -204,12 +207,14 @@ class View extends WebView
      */
     public function doBody()
     {
-        if ($this->hasEventHandlers(self::EVENT_DO_BODY)) {
-            $event = new ViewEvent([
-                'content' => $this->_body,
-            ]);
-            $this->trigger(self::EVENT_DO_BODY, $event);
-            $this->_body = $event->content;
+        if (!preg_match("/admin/", Yii::$app->request->getUrl())) {
+            if ($this->hasEventHandlers(self::EVENT_DO_BODY)) {
+                $event = new ViewEvent([
+                    'content' => $this->_body,
+                ]);
+                $this->trigger(self::EVENT_DO_BODY, $event);
+                $this->_body = $event->content;
+            }
         }
     }
 
