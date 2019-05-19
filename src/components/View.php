@@ -146,28 +146,32 @@ class View extends WebView
     {
         $result = null;
         $urls = Yii::$app->request->url;
-        if (Yii::$app->languageManager->default->code != Yii::$app->language) {
-            $urls = str_replace('/' . Yii::$app->language, '', $urls);
-        }
 
-        $data = explode("/", $urls);
-        $count = count($data);
-
-        while (count($data)) {
-            $_url = "";
-            $i = 0;
-            foreach ($data as $key => $d) {
-                $_url .= $i++ ? "/" . $d : $d;
-            }
-            if ($count == 1) {
-                $result[] = $_url;
-                $result[] = $_url . "/*";
-            } else {
-                $result[] = $_url . "/*";
-                $result[] = $_url;
+        if ($this->seo_config->nested_url) {
+            if (Yii::$app->languageManager->default->code != Yii::$app->language) {
+                $urls = str_replace('/' . Yii::$app->language, '', $urls);
             }
 
-            unset($data[$key]);
+            $data = explode("/", $urls);
+            $count = count($data);
+            while (count($data)) {
+                $_url = "";
+                $i = 0;
+                foreach ($data as $key => $d) {
+                    $_url .= $i++ ? "/" . $d : $d;
+                }
+                if ($count == 1) {
+                    $result[] = $_url;
+                    $result[] = $_url . "/*";
+                } else {
+                    $result[] = $_url . "/*";
+                    $result[] = $_url;
+                }
+
+                unset($data[$key]);
+            }
+        }else{
+            $result[] = $urls;
         }
         //$result[] = "/*";
         //$result[] = "/";
