@@ -291,6 +291,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
             $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
+            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => 'red']);
 
 
         } else {
