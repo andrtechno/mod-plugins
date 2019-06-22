@@ -194,7 +194,7 @@ class View extends WebView
         ob_implicit_flush(false);
 
         $this->beginPage();
-        $this->head();
+        //$this->head();
         $this->beginBody();
 
         $this->doBody();
