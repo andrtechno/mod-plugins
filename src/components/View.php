@@ -148,7 +148,8 @@ class View extends WebView
         $urls = Yii::$app->request->url;
 
         if ($this->seo_config->nested_url) {
-            if (Yii::$app->languageManager->default->code != Yii::$app->language) {
+
+            if (isset(Yii::$app->languageManager->default->code) && Yii::$app->languageManager->default->code != Yii::$app->language) {
                 $urls = str_replace('/' . Yii::$app->language, '', $urls);
             }
 

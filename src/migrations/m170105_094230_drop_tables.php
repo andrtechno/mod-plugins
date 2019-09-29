@@ -20,7 +20,7 @@ class m170105_094230_drop_tables extends Migration
 
     public function down()
     {
-        echo "m170105_094230_drop_tables cannot be reverted.\n";
-        return false;
+        //echo "m170105_094230_drop_tables cannot be reverted.\n";
+        //return false;
     }
 }
