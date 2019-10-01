@@ -38,7 +38,7 @@ class EventDirRepository extends EventRepository
      */
     protected function checkApp($pluginClass)
     {
-        if (!isset($pluginClass::$appId)) return BasePlugin::APP_FRONTEND;
+        if (!isset($pluginClass::$appId)) return BasePlugin::APP_WEB;
         return $pluginClass::$appId;
     }
 }

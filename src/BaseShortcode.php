@@ -10,7 +10,7 @@ use panix\mod\plugins\interfaces\IShortcode;
  */
 abstract class BaseShortcode implements IShortcode
 {
-    const APP_FRONTEND = 1;
+    const APP_WEB = 1;
     const APP_BACKEND = 2;
     const APP_COMMON = 3;
 
@@ -18,10 +18,10 @@ abstract class BaseShortcode implements IShortcode
 
     /**
      * Application id, where plugin will be worked.
-     * Support values: frontend, backend, common, api
-     * Default: frontend
+     * Support values: web, backend, common, api
+     * Default: web
      * @var string $appId
      */
-    public static $appId = self::APP_FRONTEND;
+    public static $appId = self::APP_WEB;
 
 }

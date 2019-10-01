@@ -24,8 +24,8 @@ class BS extends Html
     public static function appLabel($app_id)
     {
         switch ($app_id) {
-            case BasePlugin::APP_FRONTEND:
-                return self::badge('F', self::TYPE_PRIMARY);
+            case BasePlugin::APP_WEB:
+                return self::badge('W', self::TYPE_PRIMARY);
                 break;
             case BasePlugin::APP_COMMON:
                 return self::badge('C', self::TYPE_SUCCESS);
@@ -38,9 +38,6 @@ class BS extends Html
                 break;
             case BasePlugin::APP_API:
                 return self::badge('A', self::TYPE_INFO);
-                break;
-            case BasePlugin::APP_WEB:
-                return self::badge('W', self::TYPE_INFO);
                 break;
             default:
                 return self::badge('D', self::TYPE_SECONDARY);

@@ -66,7 +66,7 @@ Next, open `@app/config/main.php` and add following:
 'components' => [
     'plugins' => [
         'class' => panix\mod\plugins\components\PluginsManager::class,
-        'appId' => panix\mod\plugins\BasePlugin::APP_WEB, // or APP_FRONTEND
+        'appId' => panix\mod\plugins\BasePlugin::APP_WEB,
         // by default
         'enablePlugins' => true,
         'shortcodesParse' => true,
@@ -106,7 +106,7 @@ Also do the same thing with
 ```
 
 #### Base AppId ```panix\mod\plugins\BasePlugin::```
-* const APP_FRONTEND = 1;
+* const APP_WEB = 1;
 * const APP_BACKEND = 2;
 * const APP_COMMON = 3;
 * const APP_API = 4;

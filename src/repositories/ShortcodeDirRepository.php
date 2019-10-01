@@ -59,7 +59,7 @@ class ShortcodeDirRepository extends ShortcodeRepository
      */
     protected function checkApp($pluginClass)
     {
-        if (!isset($pluginClass::$appId)) return BaseShortcode::APP_FRONTEND;
+        if (!isset($pluginClass::$appId)) return BaseShortcode::APP_WEB;
         return $pluginClass::$appId;
     }
 }

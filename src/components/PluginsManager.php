@@ -20,7 +20,7 @@ class PluginsManager extends Component implements BootstrapInterface
 {
     /**
      * Application id for category plugins.
-     * Support constants: APP_FRONTEND, APP_BACKEND, APP_COMMON
+     * Support constants: APP_WEB, APP_BACKEND, APP_COMMON
      * @var integer $appId
      */
     public $appId;

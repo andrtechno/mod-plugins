@@ -14,8 +14,8 @@ class m170105_094233_plugins_app extends Migration
         ]);
 
         $this->insert($this->tn(self::TBL_APP), [
-            'id' => BasePlugin::APP_FRONTEND,
-            'name' => 'frontend',
+            'id' => BasePlugin::APP_WEB,
+            'name' => 'web',
         ]);
 
         $this->insert($this->tn(self::TBL_APP), [
@@ -36,11 +36,6 @@ class m170105_094233_plugins_app extends Migration
         $this->insert($this->tn(self::TBL_APP), [
             'id' => BasePlugin::APP_CONSOLE,
             'name' => 'console',
-        ]);
-
-        $this->insert($this->tn(self::TBL_APP), [
-            'id' => BasePlugin::APP_WEB,
-            'name' => 'web',
         ]);
     }
 

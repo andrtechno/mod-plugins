@@ -39,7 +39,7 @@ class TestPlugin extends BasePlugin
      * Application id, where plugin will be worked.
      * @var appId integer
      */
-    public static $appId = self::APP_FRONTEND;
+    public static $appId = self::APP_WEB;
 
 ```
 
