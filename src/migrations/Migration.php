@@ -1,11 +1,10 @@
 <?php
-namespace panix\mod\plugins\migrations;
 
+namespace panix\mod\plugins\migrations;
 
 use panix\mod\plugins\models\Category;
 use panix\mod\plugins\models\Event;
 use panix\mod\plugins\models\Plugin;
-use yii\db\ColumnSchemaBuilder;
 
 /**
  * Custom migration which makes sure InnoDB with UTF-8 is preferred when using MySQL.
@@ -62,15 +61,4 @@ class Migration extends \yii\db\Migration
         return 'fk_' . $this->tableGroup . '__' . $table1 . '_' . $table2;
     }
 
-    /**
-     * Creates a smallint column.
-     * @param int $length column size or precision definition.
-     * This parameter will be ignored if not supported by the DBMS.
-     * @return ColumnSchemaBuilder the column instance which can be further customized.
-     * @since 2.0.6
-     */
-    public function tinyInteger($length = null)
-    {
-        return $this->getDb()->getSchema()->createColumnSchemaBuilder('tinyint', $length);
-    }
 }

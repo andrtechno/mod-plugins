@@ -89,7 +89,7 @@ class EventController extends AdminController
                 'modelClass' => 'Event',
             ]) . ' ' . $model->plugin->name;
         $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'EVENTS'), 'url' => ['index']];
-        $this->breadcrumbs[] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+        $this->breadcrumbs[] = ['label' => $model->plugin->name, 'url' => ['view', 'id' => $model->id]];
         $this->breadcrumbs[] = Yii::t('plugins/default', 'Update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
