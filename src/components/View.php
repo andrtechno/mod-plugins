@@ -2,13 +2,13 @@
 
 namespace panix\mod\plugins\components;
 
-use panix\engine\CMS;
-use panix\engine\Html;
+
 use Yii;
 use yii\helpers\Url;
 use yii\web\View as WebView;
 use panix\mod\seo\models\SeoUrl;
-
+use panix\engine\CMS;
+use panix\engine\Html;
 
 /**
  * Class View
@@ -66,6 +66,7 @@ class View extends WebView
             //     Yii::$app->view->title = Yii::$app->settings->get('app', 'site_name');
             // }
         }
+
         $this->printMeta('title', $this->title);
         if ($url->description) {
             if (isset($url->params)) {
@@ -248,7 +249,9 @@ class View extends WebView
     public function init()
     {
         $this->seo_config = Yii::$app->settings->get('seo');
+
         parent::init();
+
 
         if (isset($this->theme->name)) {
             if ($this->theme->name != 'dashboard') {
@@ -270,7 +273,7 @@ class View extends WebView
     {
         if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
 
-            $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{CODE}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
+            $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{code}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
 
             echo '<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $this->seo_config->google_tag_manager . '"
@@ -307,7 +310,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
                 if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
                     $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
-                    $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{CODE}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
+                    $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{code}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
                 }
 
 
@@ -325,14 +328,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 if ($this->data) {
                     $this->seoName($this->data);
-                    $titleFlag = false;
                 } else {
-                    $titleFlag = true;
-                }
-
-                if ($titleFlag) {
+                    $this->title .= ' '.Yii::$app->settings->get('seo', 'title_prefix').' '. Yii::$app->settings->get('app', 'sitename');
                     $this->printMeta('title', Html::encode($this->title));
                 }
+
                 $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
                 $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
 
