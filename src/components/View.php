@@ -86,9 +86,14 @@ class View extends WebView
 
     private function printMeta($name, $content)
     {
-
+        $sitename = Yii::$app->settings->get('app', 'sitename');
         $content = strip_tags($content);
         if ($name == "title") {
+            if ($this->title) {
+                $content .= ' ' . Yii::$app->settings->get('seo', 'title_prefix') . ' ' . $sitename;
+            } else {
+                $content = $sitename;
+            }
             echo "<title>{$content}</title>\n";
         } else {
             $this->registerMetaTag(['name' => $name, 'content' => $content]);
@@ -172,7 +177,7 @@ class View extends WebView
 
                 unset($data[$key]);
             }
-        }else{
+        } else {
             $result[] = $urls;
         }
         //$result[] = "/*";
@@ -329,7 +334,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 if ($this->data) {
                     $this->seoName($this->data);
                 } else {
-                    $this->title .= ' '.Yii::$app->settings->get('seo', 'title_prefix').' '. Yii::$app->settings->get('app', 'sitename');
+
                     $this->printMeta('title', Html::encode($this->title));
                 }
 
