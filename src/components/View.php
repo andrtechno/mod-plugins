@@ -25,6 +25,7 @@ class View extends WebView
 
     public $h1;
     public $text;
+    public $description;
     private $seo_config;
     protected $data;
 
