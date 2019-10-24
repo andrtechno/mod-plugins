@@ -12,6 +12,7 @@ use panix\engine\Html;
 
 /**
  * Class View
+ * @property string $description
  * @package panix\mod\plugins\components
  */
 class View extends WebView
@@ -49,8 +50,6 @@ class View extends WebView
 //835652742:AAES6NfEgJm7GMWmKzxkOy861ppAHkCezZo
     private function seoName($url)
     {
-        $controller = Yii::$app->controller;
-
         if ($url->title) {
             if (isset($url->params)) {
                 foreach ($url->params as $paramData) {
@@ -61,11 +60,6 @@ class View extends WebView
                 }
             }
             $this->title .= $url->title;
-            //$this->printMeta('title', Yii::$app->view->title);
-        } else {
-            // if (!Yii::$app->view->title) {
-            //     Yii::$app->view->title = Yii::$app->settings->get('app', 'site_name');
-            // }
         }
 
         $this->printMeta('title', $this->title);
@@ -74,15 +68,15 @@ class View extends WebView
                 foreach ($url->params as $paramData) {
                     $param = $this->getSeoparam($paramData);
                     if ($param) {
-                        $url->description = str_replace($param['tpl'], $param['item'], $url->description);
+                        $this->description = str_replace($param['tpl'], $param['item'], $url->description);
                     }
                 }
             }
-            $this->printMeta('description', $url->description);
-        } else {
-            if (isset($controller->description))
-                $this->printMeta('description', $controller->description);
+            $this->description .= $url->description;
         }
+
+        if($this->description)
+            $this->printMeta('description', $this->description);
     }
 
     private function printMeta($name, $content)
