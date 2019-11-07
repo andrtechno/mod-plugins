@@ -294,8 +294,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['charset' => Yii::$app->charset]);
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
+
+            //<!-- Chrome, Firefox OS and Opera -->
             $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
+
             $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => 'red']);
+
+            //<!-- Windows Phone -->
+            $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => 'red']);
+
+            //<!-- iOS Safari -->
+            $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => 'red']);
 
 
         } else {
