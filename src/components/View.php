@@ -377,15 +377,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         } else {
             $content = $this->_body . $endPage;
         }
-        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
-            $this->registerCss('
-                #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
-                #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
-                ', [], 'pixelion');
-        }
-        $copyright = '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
-        $content = str_replace(base64_decode('e2NvcHlyaWdodH0='), $copyright, $content);
 
+        $content=str_replace(base64_decode('e2NvcHlyaWdodH0='), $this->copyright(), $content);
 
         if (Yii::$app->id != 'dashboard') {
             if (!Yii::$app->request->isAjax && !preg_match("#" . base64_decode('e2NvcHlyaWdodH0=') . "#", $content)) { // && !preg_match("/print/", $this->layout)
@@ -408,5 +401,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         ]);
 
         $this->clear();
+    }
+
+    public function copyright(){
+        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+            $this->registerCss('
+                #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
+                #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
+                ', [], 'pixelion');
+        }
+        return '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
     }
 }
