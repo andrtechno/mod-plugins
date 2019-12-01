@@ -59,7 +59,7 @@ class View extends WebView
                     }
                 }
             }
-            $this->title .= $url->title;
+            $this->title = $url->title;
         }
 
         $this->printMeta('title', $this->title);
@@ -72,7 +72,7 @@ class View extends WebView
                     }
                 }
             }
-            $this->description .= $url->description;
+            $this->description = $url->description;
         }
 
         if($this->description)
