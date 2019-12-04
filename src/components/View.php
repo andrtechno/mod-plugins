@@ -322,11 +322,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{code}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
                 }
 
-                $faviconPath = Yii::getAlias('@app/web') . DIRECTORY_SEPARATOR . Yii::$app->settings->get('app', 'favicon');
+                $faviconPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . Yii::$app->settings->get('app', 'favicon');
                 $faviconInfo = pathinfo($faviconPath);
 
 
                 if (file_exists($faviconPath)) {
+					                    if (isset($faviconInfo['extension'])) {
                     if ($faviconInfo['extension'] == 'ico') {
                         $this->registerLinkTag([
                             'rel' => 'shortcut icon',
@@ -349,7 +350,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                         }
                     }
-
+}
                 }
 
 
