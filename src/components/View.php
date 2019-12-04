@@ -75,7 +75,7 @@ class View extends WebView
             $this->description = $url->description;
         }
 
-        if($this->description)
+        if ($this->description)
             $this->printMeta('description', $this->description);
     }
 
@@ -322,6 +322,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{code}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
                 }
 
+                $faviconPath = Yii::getAlias('@app/web') . DIRECTORY_SEPARATOR . Yii::$app->settings->get('app', 'favicon');
+                $faviconInfo = pathinfo($faviconPath);
+
+
+                if (file_exists($faviconPath)) {
+                    if ($faviconInfo['extension'] == 'ico') {
+                        $this->registerLinkTag([
+                            'rel' => 'shortcut icon',
+                            'type' => "image/x-icon",
+                            'href' => '/favicon.ico'
+                        ]);
+                    } else {
+                        if (isset($this->seo_config->favicon_size) && !empty($this->seo_config->favicon_size)) {
+                            $list = explode(',', $this->seo_config->favicon_size);
+                            foreach ($list as $size) {
+                                if ($size == 144) {
+                                    $this->registerMetaTag(['name' => 'msapplication-TileImage', 'content' => Url::to(['/site/favicon', 'size' => $size])]);
+                                }
+                                $this->registerLinkTag([
+                                    'rel' => 'apple-touch-icon',
+                                    'sizes' => "{$size}x{$size}",
+                                    'href' => Url::to(['/site/favicon', 'size' => $size])
+                                ]);
+                            }
+
+                        }
+                    }
+
+                }
+
 
                 if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
                     $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
@@ -378,7 +408,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $content = $this->_body . $endPage;
         }
 
-        $content=str_replace(base64_decode('e2NvcHlyaWdodH0='), $this->copyright(), $content);
+        $content = str_replace(base64_decode('e2NvcHlyaWdodH0='), $this->copyright(), $content);
 
         if (Yii::$app->id != 'dashboard') {
             if (!Yii::$app->request->isAjax && !preg_match("#" . base64_decode('e2NvcHlyaWdodH0=') . "#", $content)) { // && !preg_match("/print/", $this->layout)
@@ -403,7 +433,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         $this->clear();
     }
 
-    public function copyright(){
+    public function copyright()
+    {
         if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
             $this->registerCss('
                 #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
