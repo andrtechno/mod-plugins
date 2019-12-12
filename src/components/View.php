@@ -117,7 +117,7 @@ class View extends WebView
         }
 
         if (class_exists($pdata->modelClass, false)) {
-            /** @var $item yii/db/ActiveRecord */
+            /** @var \yii\db\ActiveRecord $item */
             $item = new $pdata->modelClass;
             if (is_string($id)) {
                 $item = $item->find()->where(['slug' => $id])->one();
@@ -196,7 +196,7 @@ class View extends WebView
         ob_implicit_flush(false);
 
         $this->beginPage();
-        //$this->head();
+        $this->head();
         $this->beginBody();
 
         $this->doBody();
@@ -289,8 +289,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      */
     public function head()
     {
-
-        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+        if (!Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
             $this->registerMetaTag(['charset' => Yii::$app->charset]);
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
@@ -306,17 +305,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             //<!-- iOS Safari -->
             $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => 'red']);
 
+            if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
-        } else {
-            Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = false;
-            Yii::$app->assetManager->bundles['yii\bootstrap4\BootstrapPluginAsset'] = false;
-        }
-
-        if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
-
-
-            // Open Graph default property
-            if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
                 if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
                     $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
                     $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{code}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
@@ -327,30 +317,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
                 if (file_exists($faviconPath)) {
-					                    if (isset($faviconInfo['extension'])) {
-                    if ($faviconInfo['extension'] == 'ico') {
-                        $this->registerLinkTag([
-                            'rel' => 'shortcut icon',
-                            'type' => "image/x-icon",
-                            'href' => '/favicon.ico'
-                        ]);
-                    } else {
-                        if (isset($this->seo_config->favicon_size) && !empty($this->seo_config->favicon_size)) {
-                            $list = explode(',', $this->seo_config->favicon_size);
-                            foreach ($list as $size) {
-                                if ($size == 144) {
-                                    $this->registerMetaTag(['name' => 'msapplication-TileImage', 'content' => Url::to(['/site/favicon', 'size' => $size])]);
+                    if (isset($faviconInfo['extension'])) {
+                        if ($faviconInfo['extension'] == 'ico') {
+                            $this->registerLinkTag([
+                                'rel' => 'shortcut icon',
+                                'type' => "image/x-icon",
+                                'href' => '/favicon.ico'
+                            ]);
+                        } else {
+                            if (isset($this->seo_config->favicon_size) && !empty($this->seo_config->favicon_size)) {
+                                $list = explode(',', $this->seo_config->favicon_size);
+                                foreach ($list as $size) {
+                                    if ($size == 144) {
+                                        $this->registerMetaTag(['name' => 'msapplication-TileImage', 'content' => Url::to(['/site/favicon', 'size' => $size])]);
+                                    }
+                                    $this->registerLinkTag([
+                                        'rel' => 'apple-touch-icon',
+                                        'sizes' => "{$size}x{$size}",
+                                        'href' => Url::to(['/site/favicon', 'size' => $size])
+                                    ]);
                                 }
-                                $this->registerLinkTag([
-                                    'rel' => 'apple-touch-icon',
-                                    'sizes' => "{$size}x{$size}",
-                                    'href' => Url::to(['/site/favicon', 'size' => $size])
-                                ]);
-                            }
 
+                            }
                         }
                     }
-}
                 }
 
 
@@ -390,7 +380,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
                 }
             }
+        } else {
+            //Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = false;
+            //Yii::$app->assetManager->bundles['yii\bootstrap4\BootstrapPluginAsset'] = false;
         }
+
 
         parent::head();
     }
@@ -436,7 +430,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     public function copyright()
     {
-        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPjax) {
+        if (!Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
             $this->registerCss('
                 #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
                 #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
