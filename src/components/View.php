@@ -325,6 +325,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 'href' => '/favicon.ico'
                             ]);
                         } else {
+                            $this->registerLinkTag([
+                                'rel' => 'icon',
+                                'type' => "image/png",
+                                'href' => Url::to(['/site/favicon', 'size' => 16])
+                            ]);
+
                             if (isset($this->seo_config->favicon_size) && !empty($this->seo_config->favicon_size)) {
                                 $list = explode(',', $this->seo_config->favicon_size);
                                 foreach ($list as $size) {
