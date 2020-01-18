@@ -88,7 +88,7 @@ class ShortcodeController extends AdminController
                 'modelClass' => 'Shortcode',
             ]) . ' ' . $model->tag;
         $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Shortcodes'), 'url' => ['index']];
-        $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
+        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');

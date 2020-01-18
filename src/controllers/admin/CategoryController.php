@@ -67,7 +67,7 @@ class CategoryController extends AdminController
                 'modelClass' => 'Category',
             ]);
         $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
-        $this->breadcrumbs[] = Yii::t('app', 'CREATE');
+        $this->breadcrumbs[] = Yii::t('app/default', 'CREATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -91,7 +91,7 @@ class CategoryController extends AdminController
                 'modelClass' => 'Category',
             ]) . ' ' . $model->name;
         $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
-        $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
+        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');

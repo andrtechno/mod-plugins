@@ -58,11 +58,11 @@ use yii\grid\GridView;
                         'options' => ['style' => 'width: 75px;'],
                         'contentOptions' => ['class' => 'text-center'],
                         'value' => function ($model) {
-                            return $model->status == $model::STATUS_ACTIVE ? '<span class="badge badge-success">' . Yii::t('app', 'ON') . '</span>' : '<span class="badge badge-danger">' . Yii::t('app', 'OFF') . '</span>';
+                            return $model->status == $model::STATUS_ACTIVE ? '<span class="badge badge-success">' . Yii::t('app/default', 'ON') . '</span>' : '<span class="badge badge-danger">' . Yii::t('app/default', 'OFF') . '</span>';
                         },
                         'filter' => [
-                            1 => Yii::t('app', 'ON'),
-                            0 => Yii::t('app', 'OFF')
+                            1 => Yii::t('app/default', 'ON'),
+                            0 => Yii::t('app/default', 'OFF')
                         ],
                         'format' => "raw"
                     ],

@@ -413,7 +413,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         if (Yii::$app->id != 'dashboard') {
             if (!Yii::$app->request->isAjax && !preg_match("#" . base64_decode('e2NvcHlyaWdodH0=') . "#", $content)) { // && !preg_match("/print/", $this->layout)
-                // die(\Yii::t('app', 'NO_COPYRIGHT'));
+                // die(\Yii::t('app/default', 'NO_COPYRIGHT'));
 
                 Yii::$app->controllerMap['maintenance'] = [
                     'class' => 'panix\engine\maintenance\controllers\MaintenanceController',
@@ -442,6 +442,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
                 ', [], 'pixelion');
         }
-        return '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
+        return '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app/default', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
     }
 }
