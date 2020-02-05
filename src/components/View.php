@@ -297,9 +297,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             //<!-- Chrome, Firefox OS and Opera -->
             $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
 
-            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => 'red']);
-
             //<!-- Windows Phone -->
+            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => 'red']);
             $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => 'red']);
 
             //<!-- iOS Safari -->
