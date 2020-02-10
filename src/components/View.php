@@ -437,10 +437,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {
         if (!Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
             $this->registerCss('
-                #pixelion span.cr-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
-                #pixelion span.cr-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
+                .pixelion{display:inline-block;position:relative}
+                .pixelion span{display:inline-block;position:relative;padding-right:20px}
+                .pixelion span:after{display:inline-block;position:absolute;content:"\2014";margin-left:5px}
+                .pixelion .pixelion-logo{display:inline-block;font-size:17px;padding: 0 0 0 45px;position:relative;font-family:Pixelion,Montserrat;font-weight:normal;line-height: 40px;}
+                .pixelion .pixelion-logo:after{font-weight:normal;content:"\f002";left:0;top:0;position:absolute;font-size:37px;font-family:Pixelion;}
                 ', [], 'pixelion');
         }
-        return '<a href="//pixelion.com.ua/" id="pixelion" target="_blank"><span>' . Yii::t('app/default', 'PIXELION') . '</span> &mdash; <span class="cr-logo">PIXELION</span></a>';
+        return '<a href="//pixelion.com.ua/" class="pixelion" target="_blank"><span>' . Yii::t('app/default', 'PIXELION') . '</span><span class="pixelion-logo">PIXELION</span></a>';
     }
 }
