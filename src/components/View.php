@@ -23,13 +23,13 @@ class View extends WebView
      */
     const EVENT_DO_BODY = 'doBody';
 
-
     public $h1;
     public $text;
     public $description;
     private $seo_config;
     protected $data;
-
+    private $cacheModel;
+    protected $_model;
     /**
      * @var string
      */
@@ -38,6 +38,7 @@ class View extends WebView
 
     protected function getData()
     {
+
         $urls = $this->getUrls();
         foreach ($urls as $url) {
             $urlF = SeoUrl::find()->where(['url' => $url])->one();
@@ -51,7 +52,7 @@ class View extends WebView
     private function seoName($url)
     {
         if ($url->title) {
-            if (isset($url->params)) {
+            if ($url->params) {
                 foreach ($url->params as $paramData) {
                     $param = $this->getSeoparam($paramData);
                     if ($param) {
@@ -64,7 +65,7 @@ class View extends WebView
 
         $this->printMeta('title', $this->title);
         if ($url->description) {
-            if (isset($url->params)) {
+            if ($url->params) {
                 foreach ($url->params as $paramData) {
                     $param = $this->getSeoparam($paramData);
                     if ($param) {
@@ -81,18 +82,17 @@ class View extends WebView
 
     private function printMeta($name, $content)
     {
-        $sitename = Yii::$app->settings->get('app', 'sitename');
+        $site_name = Yii::$app->settings->get('app', 'sitename');
         $content = strip_tags($content);
         if ($name == "title") {
             if ($this->title) {
-                $content .= ' ' . Yii::$app->settings->get('seo', 'title_prefix') . ' ' . $sitename;
+                $content .= ' ' . Yii::$app->settings->get('seo', 'title_prefix') . ' ' . $site_name;
             } else {
-                $content = $sitename;
+                $content = $site_name;
             }
             echo "<title>{$content}</title>\n";
         } else {
             $this->registerMetaTag(['name' => $name, 'content' => $content]);
-            // echo "<meta name=\"{$name}\" content=\"{$content}\" />\n";
         }
     }
 
@@ -141,6 +141,38 @@ class View extends WebView
 
             return false;
         }
+    }
+
+    /**
+     * @param $model
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public function seo($model)
+    {
+        if (isset($this->theme->name)) {
+            if ($this->theme->name == 'dashboard') {
+                return null;
+            }
+        }
+        if (!$this->cacheModel) {
+            if($model){
+                $this->cacheModel = SeoUrl::find()->where(['owner_id' => $model->primaryKey, 'handler_hash' => $model->getHash()])->one();
+                if ($this->cacheModel !== null) {
+                    return $this->cacheModel;
+                }
+            }else{
+                $urls = $this->getUrls();
+                foreach ($urls as $url) {
+                    $this->cacheModel = SeoUrl::find()->where(['url' => $url])->one();
+                    if ($this->cacheModel !== null) {
+                        return $this->cacheModel;
+                    }
+                }
+            }
+
+        }
+
+        return $this->cacheModel;
     }
 
     private function getUrls()
@@ -222,7 +254,9 @@ class View extends WebView
                 $this->_body = $event->content;
             }
         }
+
     }
+
 
     /**
      * @inheritdoc
@@ -250,20 +284,35 @@ class View extends WebView
     {
         $this->seo_config = Yii::$app->settings->get('seo');
 
-        parent::init();
 
+        parent::init();
 
         if (isset($this->theme->name)) {
             if ($this->theme->name != 'dashboard') {
-                $this->data = $this->getData();
+                /*$this->data = $this->getData();
                 if ($this->data) {
                     if ($this->data->h1)
                         $this->h1 = $this->data->h1;
                     if ($this->data->text)
                         $this->text = $this->data->text;
-                }
+                }*/
+
+
             }
         }
+    }
+
+    public function beforeRender($viewFile, $params)
+    {
+        if ($this->_model) {
+            $seo = $this->seo($this->_model);
+
+            if ($seo->h1)
+                $this->h1 = $seo->h1;
+            if ($seo->text)
+                $this->text = $seo->text;
+        }
+        return parent::beforeRender($viewFile, $params);
     }
 
     /**
@@ -280,6 +329,7 @@ class View extends WebView
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->' . PHP_EOL;
         }
+
         parent::beginBody();
     }
 
@@ -313,7 +363,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 $faviconPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . Yii::$app->settings->get('app', 'favicon');
                 $faviconInfo = pathinfo($faviconPath);
-
 
                 if (file_exists($faviconPath)) {
                     if (isset($faviconInfo['extension'])) {
@@ -360,14 +409,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
                     $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
                 }
+                $seo = $this->seo($this->_model);
+                if ($seo) {
 
-                if ($this->data) {
-                    $this->seoName($this->data);
+                    $this->seoName($seo);
                 } else {
-
+                    //if ($this->data) {
+                    //    $this->seoName($this->data);
+                    // } else {
                     $this->printMeta('title', Html::encode($this->title));
+                    // }
                 }
-
                 $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
                 $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
 
@@ -445,5 +497,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 ', [], 'pixelion');
         }
         return '<a href="//pixelion.com.ua/" class="pixelion" target="_blank"><span>' . Yii::t('app/default', 'PIXELION') . '</span><span class="pixelion-logo">PIXELION</span></a>';
+    }
+
+
+    public function getModel()
+    {
+        return $this->_model;
+    }
+
+    public function setModel($model)
+    {
+        $this->_model = $model;
     }
 }
