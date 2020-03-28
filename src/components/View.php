@@ -345,14 +345,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
 
             //<!-- Chrome, Firefox OS and Opera -->
-            $this->registerMetaTag(['name' => 'theme-color', 'content' => 'red']);
+            $this->registerMetaTag(['name' => 'theme-color', 'content' => $this->theme->get('theme_color')]);
 
             //<!-- Windows Phone -->
-            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => 'red']);
-            $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => 'red']);
+            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => $this->theme->get('theme_color')]);
+            $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => $this->theme->get('theme_color')]);
 
             //<!-- iOS Safari -->
-            $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => 'red']);
+            $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => $this->theme->get('theme_color')]);
 
             if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
