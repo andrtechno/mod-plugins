@@ -306,11 +306,12 @@ class View extends WebView
     {
         if ($this->_model) {
             $seo = $this->seo($this->_model);
-
-            if ($seo->h1)
-                $this->h1 = $seo->h1;
-            if ($seo->text)
-                $this->text = $seo->text;
+            if ($seo) {
+				if ($seo->h1)
+					$this->h1 = $seo->h1;
+				if ($seo->text)
+					$this->text = $seo->text;
+			}
         }
         return parent::beforeRender($viewFile, $params);
     }
@@ -320,7 +321,7 @@ class View extends WebView
      */
     public function beginBody()
     {
-        if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
+        if (isset(Yii::$app->controller->dashboard) && !Yii::$app->controller->dashboard && isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
 
             $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{code}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
 
