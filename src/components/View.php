@@ -307,11 +307,11 @@ class View extends WebView
         if ($this->_model) {
             $seo = $this->seo($this->_model);
             if ($seo) {
-				if ($seo->h1)
-					$this->h1 = $seo->h1;
-				if ($seo->text)
-					$this->text = $seo->text;
-			}
+                if ($seo->h1)
+                    $this->h1 = $seo->h1;
+                if ($seo->text)
+                    $this->text = $seo->text;
+            }
         }
         return parent::beforeRender($viewFile, $params);
     }
