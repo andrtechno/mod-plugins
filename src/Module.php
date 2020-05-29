@@ -36,6 +36,7 @@ class Module extends WebModule
                         'label' => Yii::t('plugins/default', 'MODULE_NAME'),
                         'url' => ['/admin/plugins/plugin/index'],
                         'icon' => $this->icon,
+                        'visible' => Yii::$app->user->can('/plugins/admin/plugin/index') || Yii::$app->user->can('/plugins/admin/plugin/*'),
                     ],
                 ],
             ]
