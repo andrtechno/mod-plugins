@@ -35,7 +35,7 @@ class CategoryController extends AdminController
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->pageName = Yii::t('plugins/default', 'Categories');
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -66,8 +66,8 @@ class CategoryController extends AdminController
         $this->pageName = Yii::t('plugins/default', 'Create {modelClass}: ', [
                 'modelClass' => 'Category',
             ]);
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
-        $this->breadcrumbs[] = Yii::t('app/default', 'CREATE');
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'CREATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
@@ -90,8 +90,8 @@ class CategoryController extends AdminController
         $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
                 'modelClass' => 'Category',
             ]) . ' ' . $model->name;
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
-        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'Categories'), 'url' => ['index']];
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'UPDATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');

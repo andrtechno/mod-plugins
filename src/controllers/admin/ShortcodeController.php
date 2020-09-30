@@ -37,7 +37,7 @@ class ShortcodeController extends AdminController
         $searchModel = new ShortcodeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $this->pageName = Yii::t('plugins/default', 'Shortcodes');
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -87,8 +87,8 @@ class ShortcodeController extends AdminController
         $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
                 'modelClass' => 'Shortcode',
             ]) . ' ' . $model->tag;
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'Shortcodes'), 'url' => ['index']];
-        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'Shortcodes'), 'url' => ['index']];
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'UPDATE');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');

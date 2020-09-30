@@ -37,7 +37,7 @@ class EventController extends AdminController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $this->pageName = Yii::t('plugins/default', 'EVENTS');
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -88,9 +88,9 @@ class EventController extends AdminController
         $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
                 'modelClass' => 'Event',
             ]) . ' ' . $model->plugin->name;
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'EVENTS'), 'url' => ['index']];
-        $this->breadcrumbs[] = ['label' => $model->plugin->name, 'url' => ['view', 'id' => $model->id]];
-        $this->breadcrumbs[] = Yii::t('plugins/default', 'Update');
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'EVENTS'), 'url' => ['index']];
+        $this->view->params['breadcrumbs'][] = ['label' => $model->plugin->name, 'url' => ['view', 'id' => $model->id]];
+        $this->view->params['breadcrumbs'][] = Yii::t('plugins/default', 'Update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');

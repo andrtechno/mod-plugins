@@ -54,7 +54,7 @@ class PluginController extends AdminController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $this->pageName = Yii::t('plugins/default', 'PLUGINS');
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -73,8 +73,8 @@ class PluginController extends AdminController
 
 
         $this->pageName = Yii::t('plugins/default', 'Install');
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['info']];
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['info']];
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
 
             $dataProvider = new ArrayDataProvider([
@@ -105,8 +105,8 @@ class PluginController extends AdminController
     public function actionInfo()
     {
         $this->pageName = Yii::t('plugins/default', 'Info');
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['info']];
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['info']];
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         return $this->render('info');
     }
@@ -137,9 +137,9 @@ class PluginController extends AdminController
         $this->pageName = Yii::t('plugins/default', 'Update {modelClass}: ', [
                 'modelClass' => 'Item',
             ]) . ' ' . $model->name;
-        $this->breadcrumbs[] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['index']];
-        $this->breadcrumbs[] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-        $this->breadcrumbs[] = Yii::t('plugins/default', 'Update');
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('plugins/default', 'PLUGINS'), 'url' => ['index']];
+        $this->view->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+        $this->view->params['breadcrumbs'][] = Yii::t('plugins/default', 'Update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
