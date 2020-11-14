@@ -18,7 +18,6 @@ return [
     'Create Item' => 'Создать плагин',
     'Create {modelClass}' => 'Создать {modelClass}',
     'Data' => 'Конфигурация',
-    'Delete' => 'Удалить',
     'Disabled' => 'Не активно',
     'Enabled' => 'Активно',
     'EVENT' => 'Событие',

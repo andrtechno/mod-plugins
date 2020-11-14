@@ -1,4 +1,5 @@
 <?php
+
 namespace panix\mod\plugins\interfaces;
 
 /**

@@ -76,7 +76,7 @@ use yii\helpers\StringHelper;
                             'class' => 'btn btn-sm btn-outline-danger',
                             'data-method' => 'post',
                             'data-confirm' => Yii::t('plugins/default', 'Are you sure to delete this item?'),
-                            'title' => Yii::t('plugins/default', 'Delete'),
+                            'title' => Yii::t('app/default', 'DELETE'),
                         ]);
                     },
                 ]
