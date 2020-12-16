@@ -75,7 +75,6 @@ class View extends WebView
             }
             $this->description = $url->description;
         }
-
         if ($this->description)
             $this->printMeta('description', $this->description);
     }
@@ -418,6 +417,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     //if ($this->data) {
                     //    $this->seoName($this->data);
                     // } else {
+                    if($this->description){
+                        $this->printMeta('description', Html::encode($this->description));
+                    }
+
                     $this->printMeta('title', Html::encode($this->title));
                     // }
                 }
