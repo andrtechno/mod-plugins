@@ -30,6 +30,7 @@ class View extends WebView
     protected $data;
     private $cacheModel;
     protected $_model;
+    public $seo=null;
     /**
      * @var string
      */
@@ -238,7 +239,10 @@ class View extends WebView
 
         return ob_get_clean();
     }
-
+    public function beginPage()
+    {
+        parent::beginPage();
+    }
     /**
      * Content manipulation. Need for correct replacement shortcodes
      */
@@ -301,15 +305,19 @@ class View extends WebView
         }
     }
 
-    public function beforeRender($viewFile, $params)
+    public function beforeRender2($viewFile, $params)
     {
         if ($this->_model) {
-            $seo = $this->seo($this->_model);
-            if ($seo) {
-                if ($seo->h1)
-                    $this->h1 = $seo->h1;
-                if ($seo->text)
-                    $this->text = $seo->text;
+            if(!$this->seo){
+                $this->seo = $this->seo($this->_model);
+            }
+          //
+           // $seo=false;
+            if ($this->seo) {
+                if ($this->seo->h1)
+                    $this->h1 = $this->seo->h1;
+                if ($this->seo->text)
+                    $this->text = $this->seo->text;
             }
         }
         return parent::beforeRender($viewFile, $params);
@@ -409,10 +417,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
                     $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
                 }
-                $seo = $this->seo($this->_model);
-                if ($seo) {
 
-                    $this->seoName($seo);
+               $this->seo = $this->seo($this->_model);
+               // $seo=false;
+                if ($this->seo) {
+
+                    $this->seoName($this->seo);
                 } else {
                     //if ($this->data) {
                     //    $this->seoName($this->data);
