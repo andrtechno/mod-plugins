@@ -7,7 +7,7 @@
     "plugins"
   ],
   "homepage": "https://github.com/andrtechno/mod-plugins",
-  "type": "yii2-extension",
+  "type": "pixelion-module",
   "license": "MIT",
   "authors": [
     {
