@@ -1,7 +1,7 @@
 <?php
-namespace panix\mod\plugins\migrations;
+//namespace panix\mod\plugins\migrations;
 
-class m170105_094230_drop_tables extends Migration
+class m170105_094230_drop_tables extends \panix\mod\plugins\migrations\Migration
 {
     public function up()
     {

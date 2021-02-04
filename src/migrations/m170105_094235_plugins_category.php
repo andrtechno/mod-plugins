@@ -1,7 +1,7 @@
 <?php
-namespace panix\mod\plugins\migrations;
 
-class m170105_094235_plugins_category extends Migration
+
+class m170105_094235_plugins_category extends \panix\mod\plugins\migrations\Migration
 {
 
     public function up()

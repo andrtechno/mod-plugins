@@ -1,9 +1,9 @@
 <?php
-namespace panix\mod\plugins\migrations;
+
 
 use panix\mod\plugins\BasePlugin;
 
-class m170105_094942_plugins_event extends Migration
+class m170105_094942_plugins_event extends \panix\mod\plugins\migrations\Migration
 {
 
     public function up()
