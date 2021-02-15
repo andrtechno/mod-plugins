@@ -13,6 +13,9 @@ use panix\engine\Html;
 /**
  * Class View
  * @property string $description
+ * @property string $canonical
+ * @property string $h1
+ * @property string $text
  * @package panix\mod\plugins\components
  */
 class View extends WebView
@@ -26,11 +29,12 @@ class View extends WebView
     public $h1;
     public $text;
     public $description;
+    public $canonical;
     private $seo_config;
     protected $data;
     private $cacheModel;
     protected $_model;
-    public $seo=null;
+    public $seo = null;
     /**
      * @var string
      */
@@ -155,12 +159,12 @@ class View extends WebView
             }
         }
         if (!$this->cacheModel) {
-            if($model){
+            if ($model) {
                 $this->cacheModel = SeoUrl::find()->where(['owner_id' => $model->primaryKey, 'handler_hash' => $model->getHash()])->one();
                 if ($this->cacheModel !== null) {
                     return $this->cacheModel;
                 }
-            }else{
+            } else {
                 $urls = $this->getUrls();
                 foreach ($urls as $url) {
                     $this->cacheModel = SeoUrl::find()->where(['url' => $url])->one();
@@ -239,10 +243,12 @@ class View extends WebView
 
         return ob_get_clean();
     }
+
     public function beginPage()
     {
         parent::beginPage();
     }
+
     /**
      * Content manipulation. Need for correct replacement shortcodes
      */
@@ -308,11 +314,11 @@ class View extends WebView
     public function beforeRender2($viewFile, $params)
     {
         if ($this->_model) {
-            if(!$this->seo){
+            if (!$this->seo) {
                 $this->seo = $this->seo($this->_model);
             }
-          //
-           // $seo=false;
+            //
+            // $seo=false;
             if ($this->seo) {
                 if ($this->seo->h1)
                     $this->h1 = $this->seo->h1;
@@ -413,13 +419,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     $this->registerMetaTag(['name' => 'google-site-verification', 'content' => $this->seo_config->google_site_verification]);
                 }
 
-                if (isset($this->seo_config->canonical) && $this->seo_config->canonical) {
-                    $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
-                    $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
+                if ($this->canonical) {
+                    $this->registerLinkTag(['rel' => 'canonical', 'href' => $this->canonical]);
+                } else {
+                    if ((isset($this->seo_config->canonical) && $this->seo_config->canonical)) {
+                        $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
+                        $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
+                    }
                 }
 
-               $this->seo = $this->seo($this->_model);
-               // $seo=false;
+
+                $this->seo = $this->seo($this->_model);
+                // $seo=false;
                 if ($this->seo) {
 
                     $this->seoName($this->seo);
@@ -427,7 +438,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     //if ($this->data) {
                     //    $this->seoName($this->data);
                     // } else {
-                    if($this->description){
+                    if ($this->description) {
                         $this->printMeta('description', Html::encode($this->description));
                     }
 
