@@ -89,9 +89,7 @@ class View extends WebView
         $site_name = Yii::$app->settings->get('app', 'sitename');
         $content = strip_tags($content);
         if ($name == "title") {
-            if ($this->title) {
-                $content .= ' ' . Yii::$app->settings->get('seo', 'title_prefix') . ' ' . $site_name;
-            } else {
+            if (!$this->title) {
                 $content = $site_name;
             }
             echo "<title>{$content}</title>\n";
