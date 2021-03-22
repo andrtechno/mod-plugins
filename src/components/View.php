@@ -334,9 +334,7 @@ class View extends WebView
     {
         if (isset(Yii::$app->controller->dashboard) && !Yii::$app->controller->dashboard && isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
 
-            $this->registerJs(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{code}' => $this->seo_config->google_tag_manager]) . PHP_EOL, self::POS_HEAD, 'google_tag_manager');
-
-            echo '<!-- Google Tag Manager (noscript) -->
+           echo '<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $this->seo_config->google_tag_manager . '"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->' . PHP_EOL;
@@ -408,8 +406,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         }
                     }
                 }
-
-
+                if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
+                    echo Html::script(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{code}' => $this->seo_config->google_tag_manager]));
+                }
                 if (isset($this->seo_config->yandex_verification) && !empty($this->seo_config->yandex_verification)) {
                     $this->registerMetaTag(['name' => 'yandex-verification', 'content' => $this->seo_config->yandex_verification]);
                 }
