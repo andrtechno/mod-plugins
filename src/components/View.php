@@ -409,7 +409,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
                     echo Html::script(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{code}' => $this->seo_config->google_tag_manager]));
 
-                    if (isset($this->params['gtm_ecomm'])) {
+                    if (isset($this->params['gtm_ecomm']) && Yii::$app->settings->get('seo','google_tag_ecommerce')) {
                         $dataLayer = \yii\helpers\Json::encode($this->params['gtm_ecomm']);
                         $js = <<<JS
 window.dataLayer = window.dataLayer || [];
