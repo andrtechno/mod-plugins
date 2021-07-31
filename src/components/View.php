@@ -332,7 +332,7 @@ class View extends WebView
      */
     public function beginBody()
     {
-        if (isset(Yii::$app->controller->dashboard) && !Yii::$app->controller->dashboard && isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
+        if (!Yii::$app->request->isAjax && isset(Yii::$app->controller->dashboard) && !Yii::$app->controller->dashboard && isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
 
             echo '<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $this->seo_config->google_tag_manager . '"
