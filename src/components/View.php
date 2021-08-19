@@ -31,10 +31,10 @@ class View extends WebView
     public $description;
     public $canonical;
     private $seo_config;
-    protected $data;
+    protected $data = null;
     private $cacheModel;
     protected $_model;
-    public $seo = null;
+
     /**
      * @var string
      */
@@ -296,13 +296,13 @@ class View extends WebView
 
         if (isset($this->theme->name)) {
             if ($this->theme->name != 'dashboard') {
-                /*$this->data = $this->getData();
+                $this->data = $this->getData();
                 if ($this->data) {
                     if ($this->data->h1)
                         $this->h1 = $this->data->h1;
                     if ($this->data->text)
                         $this->text = $this->data->text;
-                }*/
+                }
 
 
             }
@@ -312,16 +312,16 @@ class View extends WebView
     public function beforeRender2($viewFile, $params)
     {
         if ($this->_model) {
-            if (!$this->seo) {
-                $this->seo = $this->seo($this->_model);
+            if (!$this->data) {
+                $this->data = $this->seo($this->_model);
             }
             //
             // $seo=false;
-            if ($this->seo) {
-                if ($this->seo->h1)
-                    $this->h1 = $this->seo->h1;
-                if ($this->seo->text)
-                    $this->text = $this->seo->text;
+            if ($this->data) {
+                if ($this->data->h1)
+                    $this->h1 = $this->data->h1;
+                if ($this->data->text)
+                    $this->text = $this->data->text;
             }
         }
         return parent::beforeRender($viewFile, $params);
@@ -437,11 +437,11 @@ JS;
                 }
 
 
-                $this->seo = $this->seo($this->_model);
+               // $this->seo = $this->seo($this->_model);
                 // $seo=false;
-                if ($this->seo) {
+                if ($this->data) {
 
-                    $this->seoName($this->seo);
+                    $this->seoName($this->data);
                 } else {
                     //if ($this->data) {
                     //    $this->seoName($this->data);
