@@ -158,7 +158,7 @@ class View extends WebView
         }
         if (!$this->cacheModel) {
             if ($model) {
-                $this->cacheModel = SeoUrl::find()->where(['owner_id' => $model->primaryKey, 'handler_hash' => $model->getHash()])->one();
+                $this->cacheModel = SeoUrl::find()->where(['owner_id' => $model->primaryKey, 'handler_hash' => $model->getHash(),'url'=>Yii::$app->urlManager->createUrl($model->url)])->one();
                 if ($this->cacheModel !== null) {
                     return $this->cacheModel;
                 }
@@ -355,11 +355,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
 
             //<!-- Chrome, Firefox OS and Opera -->
-            $this->registerMetaTag(['name' => 'theme-color', 'content' => $this->theme->get('theme_color')]);
+            $this->registerMetaTag(['name' => 'theme-color', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
 
             //<!-- Windows Phone -->
-            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => $this->theme->get('theme_color')]);
-            $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => $this->theme->get('theme_color')]);
+            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
+            $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
 
             //<!-- iOS Safari -->
             $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => $this->theme->get('theme_color')]);
