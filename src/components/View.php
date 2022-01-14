@@ -354,16 +354,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
 
-            //<!-- Chrome, Firefox OS and Opera -->
-            $this->registerMetaTag(['name' => 'theme-color', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
+			if(!empty($this->theme->get('theme_color'))){
+                //<!-- Chrome, Firefox OS and Opera -->
+                $this->registerMetaTag(['name' => 'theme-color', 'content' => $this->theme->get('theme_color')]);
 
-            //<!-- Windows Phone -->
-            $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
-            $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
+                //<!-- Windows Phone -->
+                $this->registerMetaTag(['name' => 'msapplication-TileColor', 'content' => $this->theme->get('theme_color')]);
+                $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => $this->theme->get('theme_color')]);
 
-            //<!-- iOS Safari -->
-            $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
-
+                //<!-- iOS Safari -->
+                $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => $this->theme->get('theme_color')]);
+			}
             if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
                 if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
