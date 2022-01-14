@@ -362,7 +362,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'msapplication-navbutton-color', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
 
             //<!-- iOS Safari -->
-            $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => $this->theme->get('theme_color')]);
+            $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => (!empty($this->theme->get('theme_color'))?$this->theme->get('theme_color'):'#fff')]);
 
             if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
