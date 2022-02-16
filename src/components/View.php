@@ -468,7 +468,7 @@ JS;
                     //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
 
 
-                    $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->code), 'href' => $url]);
+                    $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->locale), 'href' => $url]);
                 }
             }
         } else {
