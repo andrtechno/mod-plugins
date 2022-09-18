@@ -408,7 +408,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     }
                 }
                 if (isset($this->seo_config->google_tag_manager) && !empty($this->seo_config->google_tag_manager)) {
-                    echo Html::script(CMS::textReplace($this->seo_config->google_tag_manager_js, ['{code}' => $this->seo_config->google_tag_manager]));
+                    echo Html::script("(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{$this->seo_config->google_tag_manager}');");
 
                     if (isset($this->params['gtm_ecomm']) && Yii::$app->settings->get('seo','google_tag_ecommerce')) {
                         $dataLayer = \yii\helpers\Json::encode($this->params['gtm_ecomm']);
