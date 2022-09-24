@@ -290,12 +290,10 @@ class View extends WebView
     public function init()
     {
         $this->seo_config = Yii::$app->settings->get('seo');
-
-
         parent::init();
-        if (!Yii::$app->request->isAjax) {
-            if (isset($this->theme->name)) {
-                if ($this->theme->name != 'dashboard') {
+        if (isset($this->theme->name)) {
+            if ($this->theme->name != 'dashboard') {
+                if (!Yii::$app->request->isAjax) {
                     $this->data = $this->getData();
                     if ($this->data) {
                         if ($this->data->h1)
@@ -303,8 +301,6 @@ class View extends WebView
                         if ($this->data->text)
                             $this->text = $this->data->text;
                     }
-
-
                 }
             }
         }
