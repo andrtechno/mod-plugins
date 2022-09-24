@@ -293,18 +293,19 @@ class View extends WebView
 
 
         parent::init();
+        if (!Yii::$app->request->isAjax) {
+            if (isset($this->theme->name)) {
+                if ($this->theme->name != 'dashboard') {
+                    $this->data = $this->getData();
+                    if ($this->data) {
+                        if ($this->data->h1)
+                            $this->h1 = $this->data->h1;
+                        if ($this->data->text)
+                            $this->text = $this->data->text;
+                    }
 
-        if (isset($this->theme->name)) {
-            if ($this->theme->name != 'dashboard') {
-                $this->data = $this->getData();
-                if ($this->data) {
-                    if ($this->data->h1)
-                        $this->h1 = $this->data->h1;
-                    if ($this->data->text)
-                        $this->text = $this->data->text;
+
                 }
-
-
             }
         }
     }
