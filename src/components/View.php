@@ -371,35 +371,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 $faviconPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . Yii::$app->settings->get('app', 'favicon');
                 $faviconInfo = pathinfo($faviconPath);
-
+                $ext = $faviconInfo['extension'];
                 if (file_exists($faviconPath)) {
                     if (isset($faviconInfo['extension'])) {
                         if ($faviconInfo['extension'] == 'ico') {
+                            if (!file_exists(Yii::getAlias("@app/web/assets/favicon.{$ext}"))) {
+                                copy(Yii::getAlias("@uploads/favicon.{$ext}"),Yii::getAlias("@app/web/assets/favicon.{$ext}"));
+                            }
                             $this->registerLinkTag([
                                 'rel' => 'shortcut icon',
                                 'type' => "image/x-icon",
-                                'href' => '/favicon.ico'
+                                'href' => '/assets/favicon.ico'
                             ]);
                         } else {
+                            if (!file_exists(Yii::getAlias("@app/web/assets/favicon-16.{$ext}"))) {
+                                $img = Yii::$app->img->load($faviconPath);
+                                $img->resize(16, 16);
+                                $img->save(Yii::getAlias("@app/web/assets/favicon-16.{$ext}"));
+                            }
                             $this->registerLinkTag([
                                 'rel' => 'icon',
                                 'type' => "image/png",
-                                'href' => Url::to(['/site/favicon', 'size' => 16])
+                                'href' => "/assets/favicon-16.{$ext}"
                             ]);
 
                             if (isset($this->seo_config->favicon_size) && !empty($this->seo_config->favicon_size)) {
                                 $list = explode(',', $this->seo_config->favicon_size);
                                 foreach ($list as $size) {
+                                    if (!file_exists(Yii::getAlias("@app/web/assets/favicon-{$size}.{$ext}"))) {
+                                        $img = Yii::$app->img->load($faviconPath);
+                                        $img->resize($size, $size);
+                                        $img->save(Yii::getAlias("@app/web/assets/favicon-{$size}.{$ext}"));
+                                    }
                                     if ($size == 144) {
-                                        $this->registerMetaTag(['name' => 'msapplication-TileImage', 'content' => Url::to(['/site/favicon', 'size' => $size])]);
+                                        $this->registerMetaTag([
+                                            'name' => 'msapplication-TileImage',
+                                            'content' => "/assets/favicon-{$size}.{$ext}"
+                                        ]);
                                     }
                                     $this->registerLinkTag([
                                         'rel' => 'apple-touch-icon',
                                         'sizes' => "{$size}x{$size}",
-                                        'href' => Url::to(['/site/favicon', 'size' => $size])
+                                        'href' => "/assets/favicon-{$size}.{$ext}"
                                     ]);
                                 }
-
                             }
                         }
                     }
