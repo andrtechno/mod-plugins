@@ -364,9 +364,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			}
             if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
-                if (isset($this->seo_config->googleanalytics_id) && !empty($this->seo_config->googleanalytics_id) && isset($this->seo_config->googleanalytics_js)) {
-                    $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->googleanalytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
-                    $this->registerJs(CMS::textReplace($this->seo_config->googleanalytics_js, ['{code}' => $this->seo_config->googleanalytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
+                if (isset($this->seo_config->google_analytics_id) && !empty($this->seo_config->google_analytics_id) && isset($this->seo_config->google_analytics_js)) {
+                    $this->registerJsFile('https://www.googletagmanager.com/gtag/js?id=' . $this->seo_config->google_analytics_id, ['async' => 'async', 'position' => self::POS_HEAD], 'dsa');
+                    $this->registerJs(CMS::textReplace($this->seo_config->google_analytics_js, ['{code}' => $this->seo_config->google_analytics_id]) . PHP_EOL, self::POS_HEAD, 'googleanalytics');
                 }
 
                 $faviconPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . Yii::$app->settings->get('app', 'favicon');
