@@ -62,17 +62,19 @@ class PluginsManager extends Component implements BootstrapInterface
             if (!isset($app->plugins)) {
                 throw new InvalidConfigException('Component "plugins" must be set');
             }
+            if (!$app->request->isAjax) {
 
-            if ($this->enablePlugins && $this->appId) {
-                $this->registerEvents($this->appId);
-            }
+                if ($this->enablePlugins && $this->appId) {
+                    $this->registerEvents($this->appId);
+                }
 
-            if ($this->shortcodesParse) {
-                Yii::$container->setSingleton(ShortcodeParser::class);
-                Yii::$container->set(ShortcodeService::class);
-                Event::on(View::class, View::EVENT_DO_BODY, [
-                    ShortcodeHandler::class, ShortcodeHandler::PARSE_SHORTCODES
-                ], $this);
+                if ($this->shortcodesParse) {
+                    Yii::$container->setSingleton(ShortcodeParser::class);
+                    Yii::$container->set(ShortcodeService::class);
+                    Event::on(View::class, View::EVENT_DO_BODY, [
+                        ShortcodeHandler::class, ShortcodeHandler::PARSE_SHORTCODES
+                    ], $this);
+                }
             }
         }
     }

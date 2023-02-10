@@ -53,7 +53,6 @@ class View extends WebView
         }
     }
 
-//835652742:AAES6NfEgJm7GMWmKzxkOy861ppAHkCezZo
     private function seoName($url)
     {
         if ($url->title) {
