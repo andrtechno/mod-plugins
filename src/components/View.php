@@ -383,15 +383,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 'href' => '/assets/favicon.ico'
                             ]);
                         } else {
-                            if (!file_exists(Yii::getAlias("@app/web/assets/favicon-16.{$ext}"))) {
+                            if (!file_exists(Yii::getAlias("@app/web/assets/favicon-57.{$ext}"))) {
                                 $img = Yii::$app->img->load($faviconPath);
-                                $img->resize(16, 16);
-                                $img->save(Yii::getAlias("@app/web/assets/favicon-16.{$ext}"));
+                                $img->resize(57, 57);
+                                $img->save(Yii::getAlias("@app/web/assets/favicon-57.{$ext}"));
                             }
                             $this->registerLinkTag([
                                 'rel' => 'icon',
                                 'type' => "image/png",
-                                'href' => "/assets/favicon-16.{$ext}"
+                                'href' => "/assets/favicon-57.{$ext}"
                             ]);
 
                             if (isset($this->seo_config->favicon_size) && !empty($this->seo_config->favicon_size)) {
