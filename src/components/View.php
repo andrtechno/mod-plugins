@@ -474,15 +474,11 @@ JS;
 
                 foreach (Yii::$app->languageManager->languages as $lang) {
                     if (Yii::$app->language == $lang->code) {
-                        $url = Url::to("/" . Yii::$app->request->pathInfo, true);
+                        $url = Url::to("/{$lang->slug}/" . Yii::$app->request->pathInfo, true);
                     } else {
-                        $url = Url::to("/{$lang->code}/" . Yii::$app->request->pathInfo, true);
+                        $url = Url::to("/" . Yii::$app->request->pathInfo, true);
                     }
-
-
                     //$link = ($lang->is_default) ? CMS::currentUrl() : '/' . $lang->code . CMS::currentUrl();
-
-
                     $this->registerLinkTag(['rel' => 'alternate', 'hreflang' => str_replace('_', '-', $lang->locale), 'href' => $url]);
                 }
             }
