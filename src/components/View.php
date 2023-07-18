@@ -157,7 +157,7 @@ class View extends WebView
         }
         if (!$this->cacheModel) {
             if ($model) {
-                $this->cacheModel = SeoUrl::find()->where(['owner_id' => $model->primaryKey, 'handler_hash' => $model->getHash(),'url'=>Yii::$app->urlManager->createUrl($model->url)])->one();
+                $this->cacheModel = SeoUrl::find()->where(['owner_id' => $model->primaryKey, 'handler_hash' => $model->getHash(), 'url' => Yii::$app->urlManager->createUrl($model->url)])->one();
                 if ($this->cacheModel !== null) {
                     return $this->cacheModel;
                 }
@@ -300,6 +300,18 @@ class View extends WebView
                         if ($this->data->text)
                             $this->text = $this->data->text;
                     }
+                    $this->registerMetaTag(['property' => 'og:type', 'content' => 'website'], 'og:type');
+                    $this->registerMetaTag(['property' => 'og:url', 'content' => Url::toRoute(['/site/index'], true)], 'og:url');
+                    if (isset($this->data->title)) {
+                        $this->registerMetaTag(['property' => 'og:title', 'content' => $this->data->title], 'og:title');
+                    }
+                    $ogImage = Yii::$app->settings->get('seo', 'og_image');
+                    if ($ogImage) {
+                        $this->registerMetaTag(['property' => 'og:image', 'content' => Url::to('/uploads/' . $ogImage, true)], 'og:image');
+                    }
+                    if (isset($this->data->description)) {
+                        $this->registerMetaTag(['property' => 'og:type', 'content' => $this->data->description], 'og:description');
+                    }
                 }
             }
         }
@@ -350,7 +362,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
             $this->registerMetaTag(['name' => 'generator', 'content' => Yii::$app->name . ' ' . Yii::$app->version]);
 
-			if(!empty($this->theme->get('theme_color'))){
+            if (!empty($this->theme->get('theme_color'))) {
                 //<!-- Chrome, Firefox OS and Opera -->
                 $this->registerMetaTag(['name' => 'theme-color', 'content' => $this->theme->get('theme_color')]);
 
@@ -360,7 +372,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 //<!-- iOS Safari -->
                 $this->registerMetaTag(['name' => 'apple-mobile-web-app-status-bar-style', 'content' => $this->theme->get('theme_color')]);
-			}
+            }
             if (!(Yii::$app->controller instanceof \panix\engine\controllers\AdminController)) {
 
                 if (isset($this->seo_config->google_analytics_id) && !empty($this->seo_config->google_analytics_id) && isset($this->seo_config->google_analytics_js)) {
@@ -375,7 +387,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     if (isset($faviconInfo['extension'])) {
                         if ($faviconInfo['extension'] == 'ico') {
                             if (!file_exists(Yii::getAlias("@app/web/assets/favicon.{$ext}"))) {
-                                copy(Yii::getAlias("@uploads/favicon.{$ext}"),Yii::getAlias("@app/web/assets/favicon.{$ext}"));
+                                copy(Yii::getAlias("@uploads/favicon.{$ext}"), Yii::getAlias("@app/web/assets/favicon.{$ext}"));
                             }
                             $this->registerLinkTag([
                                 'rel' => 'shortcut icon',
@@ -425,7 +437,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','{$this->seo_config->google_tag_manager}');");
 
-                    if (isset($this->params['gtm_ecomm']) && Yii::$app->settings->get('seo','google_tag_ecommerce')) {
+                    if (isset($this->params['gtm_ecomm']) && Yii::$app->settings->get('seo', 'google_tag_ecommerce')) {
                         $dataLayer = \yii\helpers\Json::encode($this->params['gtm_ecomm']);
                         $js = <<<JS
 window.dataLayer = window.dataLayer || [];
@@ -453,7 +465,7 @@ JS;
                 }
 
 
-               // $this->seo = $this->seo($this->_model);
+                // $this->seo = $this->seo($this->_model);
                 // $seo=false;
                 if ($this->data) {
 
@@ -469,8 +481,8 @@ JS;
                     $this->printMeta('title', Html::encode($this->title));
                     // }
                 }
-                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language]);
-                $this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
+                $this->registerMetaTag(['property' => 'og:locale', 'content' => Yii::$app->language], 'og:locale');
+                //$this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
 
                 foreach (Yii::$app->languageManager->languages as $lang) {
                     if (Yii::$app->language == $lang->code) {
