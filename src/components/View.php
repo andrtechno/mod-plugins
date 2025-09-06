@@ -459,7 +459,14 @@ JS;
                     $this->registerLinkTag(['rel' => 'canonical', 'href' => $this->canonical]);
                 } else {
                     if ((isset($this->seo_config->canonical) && $this->seo_config->canonical)) {
-                        $canonical = Yii::$app->request->getHostInfo() . '/' . Yii::$app->request->getPathInfo();
+                        $langActive  = Yii::$app->languageManager->active;
+                        $lang = '/';
+                        if(isset($langActive)){
+                            if(!$langActive->is_default){
+                                $lang .= $langActive->slug.'/';
+                            }
+                        }
+                        $canonical = Yii::$app->request->getHostInfo() . $lang . Yii::$app->request->getPathInfo();
                         $this->registerLinkTag(['rel' => 'canonical', 'href' => $canonical]);
                     }
                 }
